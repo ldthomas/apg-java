@@ -1,0 +1,4 @@
+#!/bin/bash
+# create the HTML documentation files
+javadoc @javadoc-args.txt
+exit 0

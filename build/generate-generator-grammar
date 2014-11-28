@@ -1,0 +1,4 @@
+#!/bin/bash
+DIR=../src/apg/
+java -jar apg.jar /in=ABNFforSABNF.bnf /javadoc=GeneratorGrammar /dir="$DIR" /package="apg" /da /dm /de /dw
+exit 0

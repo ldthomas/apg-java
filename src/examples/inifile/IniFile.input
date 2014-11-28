@@ -1,0 +1,42 @@
+
+; blank line and comment before first section
+[  FirstSection ] ; comment after section 
+
+; blank line & comment before value
+key1 = 100; integer value
+key2 = abc; alphanumeric
+key2 = 1bc; alphanumeric may begin with digit
+key4 = 'single, quoted, data """"~!@#$%^&*()_+=-[]{}:<>,.?/'  ; single quoted value
+key5 = "double, quoted, data ''''~!@#$%^&*()_+=-[]{}:<>,.?/"  ; double quoted value
+
+[SecondSection ]
+
+; multiple ValueName definitions
+ValueName1=1000, 1001, 1002 ; value arrays
+ValueName1= 1003
+ValueName1 = 1004, 1005
+ValueName2=2000, 2001, 2002
+ValueName2= 2003
+ValueName2 = 2004, 2005
+
+[ _Third_Section] ; section name starts with underscore
+; value names can start with underscore & digits
+line_3 = regular
+_3line = underscore
+3_line = digit
+
+;section name starts with digit
+[4th_Section]
+line1 = regular
+line2 = 5digits
+line3 = digits100
+
+; multiple Section Names
+[SecondSection ]
+ValueName1=3000, 3001, 3002
+ValueName1= 3003
+ValueName1 = 3004, 3005
+ValueName2=4000, 4001, 4002
+ValueName2= 4003
+ValueName2 = 4004, 4005
+

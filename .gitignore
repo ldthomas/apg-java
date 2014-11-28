@@ -1,0 +1,7 @@
+.*
+*~
+!.gitignore
+cmsg
+**/bin
+**/javadoc
+*.jar

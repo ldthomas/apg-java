@@ -1,0 +1,7 @@
+#!/bin/bash
+# create the APG jar file
+jar cmf apg.mf apg.jar -C ../bin apg
+#
+# create the examples jar file
+jar cmf examples.mf examples.jar -C ../bin examples -C ../bin apg
+exit 0

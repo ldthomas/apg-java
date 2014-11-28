@@ -1,0 +1,9 @@
+#!/bin/bash
+DIR=../src/examples/
+java -jar apg.jar /in=expressions.bnf /javadoc=Expressions /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
+java -jar apg.jar /in=uexpressions.bnf /javadoc=UExpressions /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
+java -jar apg.jar /in=ipv4.bnf /javadoc=IPv4 /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
+java -jar apg.jar /in=uipv4.bnf /javadoc=UIPv4 /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
+java -jar apg.jar /in=hostname.bnf /javadoc=Hostname /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
+java -jar apg.jar /in=uhostname.bnf /javadoc=UHostname /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
+exit 0
