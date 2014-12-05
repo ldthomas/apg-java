@@ -341,7 +341,7 @@ The help flag may be ? or /help.
 	
 	private static void displayVersion(PrintStream out){
 		out.println("Java APG Version 1.0, released 10/23/2011");
-		out.println("Copyright (C) 2009 Lowell D. Thomas, all rights reserved");
+		out.println("Copyright (C) 2011 Lowell D. Thomas, all rights reserved");
 		out.println();
 		out.println("Licence Notification");
 		out.println();

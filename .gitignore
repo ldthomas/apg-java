@@ -1,7 +1,11 @@
-.*
 *~
+.*
 !.gitignore
-cmsg
 **/bin
+**/classes
 **/javadoc
 *.jar
+cmsg
+README.html
+RemoteSystemsTempFiles
+/bin/

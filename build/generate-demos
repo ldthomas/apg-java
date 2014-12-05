@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# re-generates some of the demo parsers from their ABNF grammars
+# this is how the parser's opcode files are generated from the ABNF grammar files (.bnf)
+#
 DIR=../src/examples/
 java -jar apg.jar /in=expressions.bnf /javadoc=Expressions /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw
 java -jar apg.jar /in=uexpressions.bnf /javadoc=UExpressions /dir="$DIR/demo/" /package="examples.demo" /da /dm /de /dw

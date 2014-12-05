@@ -1,7 +1,54 @@
 #!/bin/bash
-# create the APG jar file
-jar cmf apg.mf apg.jar -C ../bin apg
-#
-# create the examples jar file
-jar cmf examples.mf examples.jar -C ../bin examples -C ../bin apg
+
+# define the binary and source directories
+bindir=../bin
+srcdir=../src
+
+# create the binary directory if it does not exist
+if [ ! -d $bindir ] 
+	then
+		mkdir $bindir ;
+		echo "make-jars: made classes directory $bindir" ;
+fi	
+
+# compile the apg source
+javac -d $bindir $srcdir/apg/*.java
+if [ $? -eq 0 ]
+	then
+		echo "make-jars: apg source compiled ok";
+	else
+		echo "make-jars: apg source compile failed";
+		exit 1
+fi	
+
+# make apg.jar
+jar cmf apg.mf apg.jar -C $bindir .
+if [ $? -eq 0 ]
+	then
+		echo "make-jars: created apg.jar";
+	else
+		echo "make-jars: apg.jar failed";
+		exit 1
+fi	
+
+# compile the examples source
+javac -sourcepath $srcdir -d $bindir $srcdir/examples/*.java
+if [ $? -eq 0 ]
+	then
+		echo "make-jars: examples source compiled ok";
+	else
+		echo "make-jars: examples source compile failed";
+		exit 1
+fi	
+
+# make examples.jar
+jar cmf examples.mf examples.jar -C $bindir/apg . -C $bindir .
+if [ $? -eq 0 ]
+	then
+		echo "make-jars: created examples.jar";
+	else
+		echo "make-jars: examples.jar failed";
+		exit 1
+fi	
+
 exit 0

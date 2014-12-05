@@ -400,8 +400,8 @@ public class GeneratorGrammar extends Grammar{
         out.println("; apg.GeneratorGrammar");
         out.println(";");
         out.println(";********************************************************************");
-        out.println(";  APG - an ABNF Parser Generator");
-        out.println(";  Copyright (C) 2011 Coast to Coast Research, Inc.");
+        out.println(";  Java APG, Version 1.0");
+        out.println(";  Copyright (C) 2011 Lowell D. Thomas, all rights reserved");
         out.println(";");
         out.println(";    author: Lowell D. Thomas");
         out.println(";            lowell@coasttocoastresearch.com");

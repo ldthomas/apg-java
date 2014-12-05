@@ -22,7 +22,7 @@ Both APG and the parsers it generates are written entirely in Java.
 A new operator, the User-Defined Terminal (UDT), is introduced
 which puts semantic actions on a nearly equal footing with the other
 ABNF terminal phrases such as the literal string.
-UDTs allow the user to write phrase recognition functions and convert them to
+UDTs allow the user to write phrase recognition functions, including non-Context-Free phrases, and convert them to
 parser operators.
 </li>
 <li>
@@ -32,13 +32,13 @@ The AST is optionally available in XML format, freeing the user to develop a tra
 </p>
 APG was originally written to fulfill a need for a parser generator that would generate parsers
 directly from ABNF grammars as defined by the IETF in 
-<a href="http://www.ietf.org/rfc/rfc4234.txt?number=4234" target=_blank&quot;>RFC 4234</a>.
+<a href="https://tools.ietf.org/html/rfc5234" target=_blank&quot;>RFC 5234</a>.
 Since then the grammar syntax for APG has evolved from that standard 
 1) to generate unambiguous parsers
 and 2) to add capabilities beyond the class of context-free-languages.
 Because of 2) the APG grammars are called SABNF (Superset ABNF).
 ABNF and SABNF will often be used interchangably in this document. 
-The differences between RFC 4234 grammars and  SABNF are summarized here:
+The differences between RFC 5234 grammars and  SABNF are summarized here:
 <ul>
 
 <li>
