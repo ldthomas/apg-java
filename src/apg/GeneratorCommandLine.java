@@ -1,5 +1,7 @@
 package apg;
 
+import java.util.Vector;
+
 class GeneratorCommandLine {
 	// package API
 	enum Flags{
@@ -32,7 +34,7 @@ class GeneratorCommandLine {
 		JAVA("/java=", null, "if not null, generate a Java parser at value.java"),
 		JAVADOC("/javadoc=", null, "if not null, generate a Java parser with Javadoc comments at value.java"),
 		JAVASCRIPT("/js=", null, "if not null, generate a JavaScript parser at value.js"),
-		INPUT("/in=", null, "(required)the SABNF grammar definition file"),
+		INPUT("/in=", null, "(required)the SABNF grammar definition files"),
 		LOGFILE("/log=", null, "name of log file, if null print log file to console"),
 		PACKAGE("/package=", "package.name", "package name for the generated grammar"),
 		WORKING_DIR("/dir=", "./", "working directory for input and output files");
@@ -51,6 +53,8 @@ class GeneratorCommandLine {
 
 	String[] paramValues = new String[20];
 	boolean[] flagValues = new boolean[20];
+	// RHA: list of input files
+	Vector<String> inputFiles = new Vector<String>();
 
 	GeneratorCommandLine(String[] args){
 
@@ -126,6 +130,8 @@ class GeneratorCommandLine {
 				}
 				else if(tok.startsWith(Params.INPUT.prefix())){
 					getParamValue(Params.INPUT, tokIndex, tok, paramValues);
+					// RHA: store all input files
+					inputFiles.add(paramValues[GeneratorCommandLine.Params.INPUT.ordinal()]);
 				}
 				else if(tok.startsWith(Params.LOGFILE.prefix())){
 					getParamValue(Params.LOGFILE, tokIndex, tok, paramValues);
@@ -201,7 +207,10 @@ class GeneratorCommandLine {
 		System.out.println("Parameters are of the form parameter value. eg. /in=value.");
 		System.out.println("Parameter values may not be empty.");
 		System.out.println("Parameter values containing spaces must be quoted.");
-		System.out.println("Multiple occurances of a given parameter are allowed. Only the last value is used.");
+		// RHA: multiple input files allowed
+		System.out.println("Multiple occurences of a given parameter are allowed.");
+		System.out.println("All occurences of /in= are used and the named files are concatenated.");
+		System.out.println("For all other parameters, only the last value is used.");
 		System.out.println("All flags and parameter names and values are case sensitive.");
 		System.out.println("help flag may be ? or /help.");
 	}

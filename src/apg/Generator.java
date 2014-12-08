@@ -5,7 +5,7 @@ package apg;
  * <p>
  * The Generator is a Java APG Parser, just like the Parser's it generates.
  * The working version of GeneratorGrammar was generated from a bootstrap program
- * built with APG version 6.1.
+ * built with <a href="http://www.coasttocoastresearch.com/apg target="_blank">APG version 6.1</a>.
  * This file, however, has been regenerated with the Generator itself.
  * That is, the Generator can now re-generate GeneratorGrammar.java. 
  * <p>
@@ -76,6 +76,7 @@ parameters
 /java=     if not null, generate a Grammar class at value.java (default: null)
 /javadoc=  if not null, generate a Grammar class with Javadoc documentation at value.java (default: null)
 /in=       (required)the SABNF grammar definition file (default: null)
+           Files from multiple /in= parameters will be concatenated.
 /log=      name of log file, if null print log file to console (default: null)
 /package=  package name for the generated grammar (default: package.name)
 /dir=      working directory for input and output files (default: ./)
@@ -85,7 +86,9 @@ Multiple occurrences of a given flag are allowed but redundant. Resulting flag i
 Parameters are of the form parameter value. eg. /in=value.
 Parameter values may not be empty.
 Parameter values containing spaces must be quoted.
-Multiple occurrences of a given parameter are allowed. Only the last value is used.
+Multiple occurrences of a given parameter are allowed.
+Files from multiple /in= parameters will be concatenated.
+For all other parameters, only the last value will be used.
 All flags and parameter names and values are case sensitive.
 The help flag may be ? or /help.
 </pre>
@@ -137,11 +140,16 @@ The help flag may be ? or /help.
 			if((fileName == null || fileName == "")){
 				throw new AssertionError("required input file name missing");
 			} else{
-				File file = getFile(workingDir, fileName);
-				if(file == null){throw new AssertionError("unable to open input file ("+fileName+")");}
-				if(!file.exists()){throw new AssertionError(
-						"requested input grammar definition file ("+file.getCanonicalPath()+") does not exist");}
-				fileName = file.getCanonicalPath();
+				// RHA: check all input files
+				for(int i=0; i<cl.inputFiles.size(); i++) {
+					fileName = cl.inputFiles.get(i);
+					File file = getFile(workingDir, fileName);
+					if(file == null){throw new AssertionError("unable to open input file ("+fileName+")");}
+					fileName = file.getCanonicalPath();
+					if(!file.exists()){throw new AssertionError(
+							"requested input grammar definition file ("+fileName+") does not exist");}
+					cl.inputFiles.set(i,fileName);
+				}
 			}
 			
 			if(cl.flagValues[GeneratorCommandLine.Flags.VALUES.ordinal()]){
@@ -150,8 +158,14 @@ The help flag may be ? or /help.
 			}
 			
 			// convert input string to a char array
-			grammarDefinitionFile = Utilities.getFileAsString(fileName);
-			if(grammarDefinitionFile == null){throw new AssertionError("can't read input grammar definition file ("+fileName+")");}
+			// RHA: process all input files
+			// TODO: include file name in error messages, probably via LineCatalog
+			grammarDefinitionFile = "";
+			for(String inputFile : cl.inputFiles){
+				String inputFileContent = Utilities.getFileAsString(inputFile);
+				if(inputFileContent == null){throw new AssertionError("can't read input grammar definition file ("+inputFile+")");}
+				grammarDefinitionFile += inputFileContent;
+			}
 			
 			// catalog the line numbers for error & information reporting
 			LineCatalog catalog = new LineCatalog(grammarDefinitionFile);
@@ -197,6 +211,7 @@ The help flag may be ? or /help.
 			parser.setRuleCallback(GeneratorGrammar.RuleNames.RNMOP.ruleID(), new Rnm(parser));
 			parser.setRuleCallback(GeneratorGrammar.RuleNames.UDTOP.ruleID(), new Udt(parser));
 			parser.setRuleCallback(GeneratorGrammar.RuleNames.TLSOP.ruleID(), new Tls(parser));
+			parser.setRuleCallback(GeneratorGrammar.RuleNames.TCSOP.ruleID(), new Tcs(parser));
 			parser.setRuleCallback(GeneratorGrammar.RuleNames.TRGOP.ruleID(), new Trg(parser));
 			parser.setRuleCallback(GeneratorGrammar.RuleNames.TBSOP.ruleID(), new Tbs(parser));
 			parser.setRuleCallback(GeneratorGrammar.RuleNames.DNUM.ruleID(), new DNum(parser));
@@ -341,7 +356,7 @@ The help flag may be ? or /help.
 	
 	private static void displayVersion(PrintStream out){
 		out.println("Java APG Version 1.0, released 10/23/2011");
-		out.println("Copyright (C) 2011 Lowell D. Thomas, all rights reserved");
+		out.println("Copyright (c) 2011 Lowell D. Thomas, all rights reserved");
 		out.println();
 		out.println("Licence Notification");
 		out.println();
@@ -412,7 +427,7 @@ The help flag may be ? or /help.
  * It is an extension of the {@link apg.Grammar} class containing additional members and enums not found
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static, singleton instance of the class.
- */
+ * <p>For more information visit <a href="http://www.coasttocoastresearch.com" target="_blank">http://www.coasttocoastresearch.com</a>. */
 		String header = "/** This class has been generated automatically from an SABNF grammer by\n" +
 				 " * Java APG, the {@link apg.Generator} class.<br>\n"+
 				 " * It is an extension of the {@link apg.Grammar}\n" +
@@ -420,6 +435,8 @@ The help flag may be ? or /help.
 				 " * in the base class.<br>\n"+
 				 " * The function {@link #getInstance()} will return a reference to a static,\n" +
 				 " * singleton instance of the class.\n"+
+				" * <p>For more information visit " +
+				"<a href=\"http://www.coasttocoastresearch.com\" target=\"_blank\">http://www.coasttocoastresearch.com</a>." +
 				" */";
 		String singleton = "    /** Called to get a singleton instance of this class.\n" +
 				"     * @return a singleton instance of this class, cast as the base class, Grammar. */";
@@ -470,6 +487,7 @@ The help flag may be ? or /help.
 			out.print("import apg.Grammar;\n");
 			out.print("import java.io.PrintStream;\n");
 			if(javadoc){out.println(jd.header);}
+			out.print("\n");
 			out.print("public class "+name+" extends Grammar{\n");
 			out.print("\n");
 			Set<Map.Entry<String, Integer>> set = ruleMap.entrySet();

@@ -1,5 +1,5 @@
 ;********************************************************************
-;  Java APG, Version 1.0
+;  APG - an ABNF Parser Generator
 ;  Copyright (C) 2011 Lowell D. Thomas, all rights reserved
 ;
 ;    author: Lowell D. Thomas
@@ -29,6 +29,7 @@ Rep           = (rep-min StarOp rep-max) /
 Element       = TrgOp   /
                 TbsOp   /
                 TlsOp   /
+                TcsOp   /
                 UdtOp   /
                 RnmOp   /
                 Group   /
@@ -51,6 +52,7 @@ NotOp         = %d33
 TrgOp         = %d37 TrgRange
 TbsOp         = %d37 TbsString
 TlsOp         = %d34 *(%d32-33/%d35-127/%d9) %d34
+TcsOp         = %d39 *(%d32-38/%d40-127/%d9) %d39
 
 rep-min       = 1*(%d48-57)
 rep-min-max   = 1*(%d48-57)

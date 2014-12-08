@@ -28,6 +28,9 @@ class GeneratorSyntax {
 	static LineCatalog lineCatalog;
 	static int currentID;
 	static SyntaxRule currentRule;
+	// RHA: state variables for incremental alternatives
+	static boolean currentRuleIsIncremented;
+	static boolean nextAlternativeIsIncremental;
 	static Vector<SyntaxRule> rules;
 	static Vector<SyntaxRule> udts;
 	static Vector<SyntaxOpcode> opcodes;
@@ -385,8 +388,10 @@ class GeneratorSyntax {
 		GenFile(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			// set the correct rule id in all RNM opcodes
-			for(SyntaxRule rule : rules){
-				for(int i = rule.opcodeOffset; i < (rule.opcodeOffset + rule.opcodeCount); i++){
+			// RHA: previous code unnecessarily (?) relied on consecutive numbering
+//			for(SyntaxRule rule : rules){
+//				for(int i = rule.opcodeOffset; i < (rule.opcodeOffset + rule.opcodeCount); i++){
+				for(int i = 0; i < opcodes.size(); i++){
 					SyntaxOpcode op = opcodes.elementAt(i);
 					if(op.type == Opcode.Type.RNM){
 						Integer value = ruleMap.get(op.name.toLowerCase());
@@ -398,7 +403,7 @@ class GeneratorSyntax {
 						}
 					}
 				}
-			}
+//			}
 			return -1;
 		}
 	}
@@ -413,7 +418,11 @@ class GeneratorSyntax {
 			return -1;
 		}
 		@Override public int postBranch(int offset, int length){
-			if(length >= 0){
+			// RHA: clean up after incrementing rule
+			if(currentRuleIsIncremented) {
+				currentRuleIsIncremented = false;
+				currentRule = new SyntaxRule();
+			} else if(length >= 0){
 				// put the current rule in the rule list
 				currentRule.id = currentID;
 				Integer previousRule = ruleMap.put(currentRule.name.toLowerCase(), currentID);
@@ -450,8 +459,20 @@ class GeneratorSyntax {
 	static class IncAlt extends RuleCallback {
 		IncAlt(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
-			if(length >= 0){logError(offset,
-				"APG does not support the \"incremental alternate\" (/=) operator - aborting this rule");
+			// RHA: find rule to increment and prepare incrementing it
+			if(length >= 0){
+				SyntaxRule ruleToIncrement = null;
+				for(SyntaxRule rule : rules) {
+					if(rule.name.equals(currentRule.name))
+						ruleToIncrement = rule;
+				}
+				if(ruleToIncrement == null)
+					logError(offset, "rule '" + currentRule.name + "' to increment not defined");					
+				else{
+					currentRule = ruleToIncrement;
+					currentRuleIsIncremented = true;
+					nextAlternativeIsIncremental = true;
+				}
 			}
 			return -1;
 		}
@@ -556,24 +577,30 @@ class GeneratorSyntax {
 	static class Alternation extends RuleCallback {
 		Alternation(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
-			// create this opcode
-			SyntaxOpcode thisOpcode = new SyntaxOpcode();
-			thisOpcode.type = Type.ALT;
-			thisOpcode.index = opcodes.size();
-			LineCatalog.Line line = lineCatalog.getLineFromOffset(offset);
-			thisOpcode.lineno = line.lineno;
-
-			// add this opcode to current rule opcode vector
-			addOpcode(thisOpcode);
-
-			// add this opcode to parent stack
-			parentStack.push(thisOpcode);
+			if(nextAlternativeIsIncremental){
+				nextAlternativeIsIncremental = false;
+				// RHA: set up environment for increment
+				parentStack.push(opcodes.get(currentRule.opcodeOffset));
+			} else{
+				// create this opcode
+				SyntaxOpcode thisOpcode = new SyntaxOpcode();
+				thisOpcode.type = Type.ALT;
+				thisOpcode.index = opcodes.size();
+				LineCatalog.Line line = lineCatalog.getLineFromOffset(offset);
+				thisOpcode.lineno = line.lineno;
+	
+				// add this opcode to current rule opcode vector
+				addOpcode(thisOpcode);
+	
+				// add this opcode to parent stack
+				parentStack.push(thisOpcode);
+			}
 			return -1;
 		}
 		@Override public int postBranch(int offset, int length){
 			// pop this opcode from the parent stack
 			SyntaxOpcode thisOpcode = parentStack.pop();
-
+            
 			// get the parent opcode
 			if(length >= 0){addChildToParent(parentStack, thisOpcode);}// add this opcode as a child to the parent opcode
 			else{removeOpcodes(thisOpcode);}
@@ -793,7 +820,34 @@ class GeneratorSyntax {
 		}
 	}
 
-	 static class Tbs extends RuleCallback {
+	static class Tcs extends RuleCallback {
+		Tcs(Parser parser){super(parser);}
+		@Override public int postBranch(int offset, int length){
+			if(length >= 0){
+				// create this opcode
+				SyntaxOpcode thisOpcode = new SyntaxOpcode();
+				thisOpcode.type = Type.TBS;
+				thisOpcode.index = opcodes.size();
+				LineCatalog.Line line = lineCatalog.getLineFromOffset(offset);
+				thisOpcode.lineno = line.lineno;
+				// add this opcode to current rule opcode vector
+				addOpcode(thisOpcode);
+
+				// remove the quotes
+				int thisOffset = offset + 1;
+				int ilength = length - 2;
+				thisOpcode.string = new char[ilength];
+				for(int i = 0; i < ilength; i++){
+					thisOpcode.string[i] = callbackData.inputString[thisOffset + i];
+				}
+				// add this opcode as a child to the parent opcode
+				addChildToParent(parentStack, thisOpcode);
+			}
+			return -1;
+		}
+	}
+
+	static class Tbs extends RuleCallback {
 		Tbs(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			tbs.clear();

@@ -46,18 +46,7 @@ The &lt;prose-val&gt; element is not supported.
 </li>
 
 <li>
-Incremental Alternatives - Rule1 =/ Rule2 - are not supported.
-</li>
-
-<li>
-Prioritized-choice is used to disambiguate the grammars. That is, alternates are tried
-as they appear in the grammar from left to right. The first alternate to successfully match a phrase
-is accepted and all other alternates are ignored.
-</li>
-
-<li>
-Repetitions always consume the longest string possible
-with no alternative being considered.
+APG accepts case-sensitive literal strings enclosed in single quotes.
 </li>
 
 <li>
@@ -70,6 +59,17 @@ just like rule names, accept that the names must begin with <code>u_</code> or
 <code>e_</code> (* see below).
 The underscore insures that there will never be
 a name conflict with a rule name. No rule name definition is given for the UDTs.
+</li>
+
+<li>
+Prioritized-choice is used to disambiguate the grammars. That is, alternates are tried
+as they appear in the grammar from left to right. The first alternate to successfully match a phrase
+is accepted and all other alternates are ignored.
+</li>
+
+<li>
+Repetitions always consume the longest string possible
+with no alternative being considered.
 </li>
 
 </ul>

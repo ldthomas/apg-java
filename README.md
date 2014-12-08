@@ -17,6 +17,8 @@
 <li>accepts User-Defined Terminals (UDTs) which allow user-written, non-Context-Free phrase recognition operators
 </li>
 <li>user-written callback functions provide complete monitoring and flow control of the parser</li>
+<li>recently extended to accept case-sensitive literal strings in single quotes</li>
+<li>recently extended to accept multiple input ABNF grammar files</li>
 <li>optional generation of an Abstract Syntax Tree (AST)</li>
 <li>translation of the AST with user-written callback functions</li>
 <li>extensive tracing facilities</li>
