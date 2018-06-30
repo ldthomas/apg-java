@@ -641,9 +641,27 @@ The help flag may be ? or /help.
 			out.print("    	Opcode[] op = new Opcode[");
 			out.print(opcodes.size());
 			out.print("];\n");
-
+			
+			// RHA split into several methods to avoid hitting method size limit
+			final int rulesPerMethod = 250;
+			for(int i=0, n=0;n<rules.size();i++,n+=rulesPerMethod){
+				out.printf("    	addOpcodes%02d(op);\n",i);
+			}
+			
+			out.print("        return op;\n");
+			out.print("    }\n");
+			out.print("\n");
+			
 			boolean first;
+			int ruleNo = 0;
 			for(SyntaxRule rule:rules){
+				if(ruleNo % rulesPerMethod == 0){
+					if(ruleNo > 0)
+						out.print("    }\n");
+					out.printf("    private static void addOpcodes%02d(Opcode[] op){\n",ruleNo/rulesPerMethod);
+				}
+				ruleNo++;
+				
 				for(int i = rule.opcodeOffset; i < (rule.opcodeOffset + rule.opcodeCount); i++){
 					SyntaxOpcode op = opcodes.elementAt(i);
 					switch(op.type){
@@ -757,7 +775,6 @@ The help flag may be ? or /help.
 					}
 				}
 			}
-			out.print("        return op;\n");
 			out.print("    }\n");
 			out.print("\n");
 			
