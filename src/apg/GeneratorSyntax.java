@@ -809,6 +809,11 @@ class GeneratorSyntax {
 				// remove the quotes
 				int thisOffset = offset + 1;
 				int ilength = length - 2;
+				// remove leading %i
+				if(callbackData.inputString[offset]=='%'){
+			        thisOffset += 2;
+					ilength -= 2;
+				}
 				thisOpcode.string = new char[ilength];
 				for(int i = 0; i < ilength; i++){
 					thisOpcode.string[i] = callbackData.inputString[thisOffset + i];
@@ -836,6 +841,11 @@ class GeneratorSyntax {
 				// remove the quotes
 				int thisOffset = offset + 1;
 				int ilength = length - 2;
+				// remove leading %s
+				if(callbackData.inputString[offset]=='%'){
+			        thisOffset += 2;
+					ilength -= 2;
+				}
 				thisOpcode.string = new char[ilength];
 				for(int i = 0; i < ilength; i++){
 					thisOpcode.string[i] = callbackData.inputString[thisOffset + i];
