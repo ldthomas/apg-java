@@ -51,8 +51,8 @@ AndOp         = %d38
 NotOp         = %d33
 TrgOp         = %d37 TrgRange
 TbsOp         = %d37 TbsString
-TlsOp         = %d34 *(%d32-33/%d35-127/%d9) %d34
-TcsOp         = %d39 *(%d32-38/%d40-127/%d9) %d39
+TlsOp         = [ "%i" ] %d34 *(%d32-33/%d35-127/%d9) %d34
+TcsOp         = %d39 *(%d32-38/%d40-127/%d9) %d39 / "%s" %d34 *(%d32-33/%d35-127/%d9) %d34
 
 rep-min       = 1*(%d48-57)
 rep-min-max   = 1*(%d48-57)
