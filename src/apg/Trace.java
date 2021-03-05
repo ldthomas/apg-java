@@ -233,7 +233,7 @@ NOTES:
 			String[] tagAttrs = {"tag", String.format("%d", tag)};
 			writer.startTag(treeDepth, traceRoot, tagAttrs);
 			
-			stack.push(new Integer(tag));
+			stack.push(tag);
 
 			String[] inputAttrs = {"length", String.format("%d", string.length)};
 			writer.textTag(treeDepth+1, "input", inputAttrs,
@@ -252,7 +252,7 @@ NOTES:
 			out.print(Utilities.indent(treeDepth));
 			out.print(traceRoot + "()");
 			out.println(Utilities.charArrayToString(string, 0, -1, suffixMaxChars));
-			stack.push(new Integer(tag));
+			stack.push(tag);
 		}
 		treeDepth++;
 	}
@@ -305,7 +305,7 @@ NOTES:
 		if(isNodeEnabled(opcode)){
 			if(enableXml){
 				tag++;
-				stack.push(new Integer(tag));
+				stack.push(tag);
 				String[] opcodeAttrs = opcodeXMLAttrs(tag, opcode);
 				writer.startTag(treeDepth, "opcode", opcodeAttrs);
 				String[] inputAttrs = {"length", String.format("%d", string.length - offset)};
@@ -318,7 +318,7 @@ NOTES:
 				out.print(Utilities.indent(treeDepth));
 				out.print(opcode.toString());
 				out.println(Utilities.charArrayToString(string, offset, -1, suffixMaxChars));
-				stack.push(new Integer(tag));
+				stack.push(tag);
 			}
 			treeDepth++;
 		}

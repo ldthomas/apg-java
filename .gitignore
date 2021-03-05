@@ -4,7 +4,10 @@
 **/bin
 **/classes
 **/javadoc
+**/out
 *.jar
+*.iml
+/build/*.txt
 cmsg
 README.html
 RemoteSystemsTempFiles
