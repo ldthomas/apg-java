@@ -1,15 +1,23 @@
+// This class has been generated automatically
+// from an SABNF grammar by Java APG, Verision 1.1.
+// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+// Licensed under the 2-Clause BSD License.
+
 package examples.demo;
 
 import apg.Grammar;
 import java.io.PrintStream;
-/** This class has been generated automatically from an SABNF grammer by
- * Java APG, the {@link apg.Generator} class.<br>
+/** This class has been generated automatically from an SABNF grammar by
+ * the {@link apg.Generator} class of Java APG, Version 1.1.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static,
  * singleton instance of the class.
+ * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>
+ * <a href="https://opensource.org/licenses/BSD-2-Clause">2-Clause BSD License</a>
  */
+
 public class UIPv4 extends Grammar{
 
     // public API
@@ -105,9 +113,13 @@ public class UIPv4 extends Grammar{
         // opcodes
     private static Opcode[] getOpcodes(){
     	Opcode[] op = new Opcode[2];
+    	addOpcodes00(op);
+        return op;
+    }
+
+    private static void addOpcodes00(Opcode[] op){
         op[0] = getOpcodeUdt(0); // u_ipv4
         {char[] a = {}; op[1] = getOpcodeTls(a);}
-        return op;
     }
 
     /** Displays the original SABNF grammar on the output device.

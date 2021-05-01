@@ -355,27 +355,9 @@ The help flag may be ? or /help.
 	}
 	
 	private static void displayVersion(PrintStream out){
-		out.println("Java APG Version 1.0, released 10/23/2011");
-		out.println("Copyright (c) 2011 Lowell D. Thomas, all rights reserved");
-		out.println();
-		out.println("Licence Notification");
-		out.println();
-		out.println("All the software in this distribution is free software:");
-		out.println("you can redistribute it and/or modify");
-		out.println("it under the terms of the GNU General Public License as published by");
-		out.println("the Free Software Foundation, either version 2 of the License, or");
-		out.println("(at your option) any later version.");
-		out.println();
-		out.println("This program is distributed in the hope that it will be useful,");
-		out.println("but WITHOUT ANY WARRANTY; without even the implied warranty of");
-		out.println("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the");
-		out.println("GNU General Public License for more details.");
-		out.println();
-		out.println("You should have received a copy of the GNU General Public License");
-		out.println("along with this program in the COPYING file. If not, visit");
-		out.println("http://www.gnu.org/licenses/old-licenses/gpl-2.0.html");
-		out.println("or write to the Free Software Foundation, Inc.,");
-		out.println("51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.");
+		out.println("Java APG Version 1.1");
+		out.println("Copyright (c) 2021 Lowell D. Thomas, all rights reserved");
+		out.println("2-Clause BSD License");
 	}
 	private static void setTraceOptions(Trace trace){trace.enableAllNodes(false);}
 
@@ -422,21 +404,23 @@ The help flag may be ? or /help.
 
 	private static class JavadocStrings{
 		/*
-/** This class has been generated automatically from an SABNF grammer by
+/** This class has been generated automatically from an SABNF grammar by
  * Java APG, the {@link apg.Generator} class.<br>
  * It is an extension of the {@link apg.Grammar} class containing additional members and enums not found
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static, singleton instance of the class.
- * <p>For more information visit <a href="http://www.coasttocoastresearch.com" target="_blank">http://www.coasttocoastresearch.com</a>. */
-		String header = "/** This class has been generated automatically from an SABNF grammer by\n" +
-				 " * Java APG, the {@link apg.Generator} class.<br>\n"+
+ * <p>Licensed under the <a href=\"https://opensource.org/licenses/BSD-2-Clause\">2-Clause BSD License</a>.</p>
+ * Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+ */
+		String header = "/** This class has been generated automatically from an SABNF grammar by\n" +
+				 " * the {@link apg.Generator} class of Java APG, Version 1.1.<br>\n"+
 				 " * It is an extension of the {@link apg.Grammar}\n" +
 				 " * class containing additional members and enums not found\n"+
 				 " * in the base class.<br>\n"+
 				 " * The function {@link #getInstance()} will return a reference to a static,\n" +
 				 " * singleton instance of the class.\n"+
-				" * <p>For more information visit " +
-				"<a href=\"http://www.coasttocoastresearch.com\" target=\"_blank\">http://www.coasttocoastresearch.com</a>." +
+				" * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>\n" +
+				" * <a href=\"https://opensource.org/licenses/BSD-2-Clause\">2-Clause BSD License</a>\n" +
 				" */";
 		String singleton = "    /** Called to get a singleton instance of this class.\n" +
 				"     * @return a singleton instance of this class, cast as the base class, Grammar. */";
@@ -476,11 +460,16 @@ The help flag may be ? or /help.
 			Vector<SyntaxRule> udts,
 			Vector<SyntaxOpcode> opcodes){
 		JavadocStrings jd = javadoc ? new JavadocStrings() : null;
+		String header = "// This class has been generated automatically\n" +
+				"// from an SABNF grammar by Java APG, Verision 1.1.\n" +
+				"// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.\n" +
+				"// Licensed under the 2-Clause BSD License.\n";
 		int udtCount;
 		int ruleCount;
 		String lineEnd;
 		String javadocEnd;
 		while(true){
+			out.println(header);
 			out.print("package ");
 			out.print(packageName);
 			out.print(";\n\n");

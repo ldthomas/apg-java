@@ -1,15 +1,22 @@
+// This class has been generated automatically
+// from an SABNF grammar by Java APG, Verision 1.1.
+// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+// Licensed under the 2-Clause BSD License.
+
 package examples.anbn;
 
 import apg.Grammar;
 import java.io.PrintStream;
-/** This class has been generated automatically from an SABNF grammer by
- * Java APG, the {@link apg.Generator} class.<br>
+/** This class has been generated automatically from an SABNF grammar by
+ * the {@link apg.Generator} class of Java APG, Version 1.1.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static,
  * singleton instance of the class.
-*/
+ * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>
+ * <a href="https://opensource.org/licenses/BSD-2-Clause">2-Clause BSD License</a>
+ */
 
 public class AnBn extends Grammar{
 
@@ -81,12 +88,16 @@ public class AnBn extends Grammar{
         // opcodes
     private static Opcode[] getOpcodes(){
     	Opcode[] op = new Opcode[5];
+    	addOpcodes00(op);
+        return op;
+    }
+
+    private static void addOpcodes00(Opcode[] op){
         {int[] a = {1,2,4}; op[0] = getOpcodeCat(a);}
         {char[] a = {97}; op[1] = getOpcodeTls(a);}
         op[2] = getOpcodeRep((char)0, (char)1, 3);
         op[3] = getOpcodeRnm(0, 0); // AnBn
         {char[] a = {98}; op[4] = getOpcodeTls(a);}
-        return op;
     }
 
     /** Displays the original SABNF grammar on the output device.

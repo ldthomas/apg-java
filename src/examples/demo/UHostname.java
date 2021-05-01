@@ -1,15 +1,23 @@
+// This class has been generated automatically
+// from an SABNF grammar by Java APG, Verision 1.1.
+// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+// Licensed under the 2-Clause BSD License.
+
 package examples.demo;
 
 import apg.Grammar;
 import java.io.PrintStream;
-/** This class has been generated automatically from an SABNF grammer by
- * Java APG, the {@link apg.Generator} class.<br>
+/** This class has been generated automatically from an SABNF grammar by
+ * the {@link apg.Generator} class of Java APG, Version 1.1.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static,
  * singleton instance of the class.
+ * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>
+ * <a href="https://opensource.org/licenses/BSD-2-Clause">2-Clause BSD License</a>
  */
+
 public class UHostname extends Grammar{
 
     // public API
@@ -115,6 +123,11 @@ public class UHostname extends Grammar{
         // opcodes
     private static Opcode[] getOpcodes(){
     	Opcode[] op = new Opcode[22];
+    	addOpcodes00(op);
+        return op;
+    }
+
+    private static void addOpcodes00(Opcode[] op){
         {int[] a = {1,2,3}; op[0] = getOpcodeCat(a);}
         op[1] = getOpcodeRnm(6, 21); // SP
         op[2] = getOpcodeRnm(1, 4); // hostname
@@ -137,7 +150,6 @@ public class UHostname extends Grammar{
         op[19] = getOpcodeTrg((char)97, (char)122);
         op[20] = getOpcodeTrg((char)48, (char)57);
         {char[] a = {32}; op[21] = getOpcodeTls(a);}
-        return op;
     }
 
     /** Displays the original SABNF grammar on the output device.

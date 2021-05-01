@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# define the binary and source directories
+bindir=../bin
+srcdir=../src
+
+# create the binary directory if it does not exist
+if [ ! -d $bindir ] 
+	then
+		mkdir $bindir ;
+		echo "make-jars: made classes directory $bindir" ;
+fi	
+
+# compile the apg source
+javac -d $bindir $srcdir/apg/*.java
+if [ $? -eq 0 ]
+	then
+		echo "make-jars: apg source compiled ok";
+	else
+		echo "make-jars: apg source compile failed";
+		exit 1
+fi	
+
+# make apg.jar
+jar cmf apg.mf apg.jar -C $bindir .
+if [ $? -eq 0 ]
+	then
+		echo "make-jars: created apg.jar";
+	else
+		echo "make-jars: apg.jar failed";
+		exit 1
+fi	
+
+exit 0
