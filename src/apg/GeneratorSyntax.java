@@ -1,3 +1,11 @@
+/*  ******************************************************************************
+    Copyright (c) 2021, Lowell D. Thomas
+    All rights reserved.
+    
+    This file is part of Java APG Version 1.1.
+    Java APG Version 1.1 may be used under the terms of the 2-Clause BSD License.
+    
+*   ******************************************************************************/
 package apg;
 /*
 		@Override public int preBranch(int offset){
