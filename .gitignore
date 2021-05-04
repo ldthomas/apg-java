@@ -14,3 +14,4 @@ RemoteSystemsTempFiles
 /bin/
 how-to.txt
 
+/src/examples/target/
