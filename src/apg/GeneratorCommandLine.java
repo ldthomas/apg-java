@@ -11,13 +11,12 @@ package apg;
 import java.util.Vector;
 
 class GeneratorCommandLine {
-    // package API
-
     enum Flags {
         ATTRIBUTES("/da", "attributes, display grammar attributes"),
         ERRORS("/de", "errors, display parsing errors"),
         GRAMMAR("/dg", "grammar, display grammar file with line numbers and character indexes"),
         HELP("?", "help, display this help screen"),
+        HELP2("/help", "help, display this help screen"),
         METRICS("/dm", "metrics, display grammar metrics (opcode counts)"),
         NO_ATTRIBUTES("/na", "no attributes, ommit grammar attribute discovery"),
         OPCODES("/dopcodes", "opcodes, display opcodes in human readable format (may generate large amount of output)"),
@@ -149,12 +148,9 @@ class GeneratorCommandLine {
                     throw new Exception(exceptionMsg(tokIndex, tok, "unrecognized argument"));
                 }
             }
-//			if(paramValues[Params.INPUT.ordinal()] == null || paramValues[Params.INPUT.ordinal()].equals("")){
-//				throw new Exception("required input file parameter, "+Params.INPUT.prefix()+"filename, is missing");
-//			}
         } catch (Exception e) {
             displayHelpScreen(e.getMessage(), args);
-            System.exit(0);
+            return;
         }
 
         if (flagValues[Flags.VERBOSE.ordinal()]) {
@@ -215,7 +211,6 @@ class GeneratorCommandLine {
         System.out.println("All occurences of /in= are used and the named files are concatenated.");
         System.out.println("For all other parameters, only the last value is used.");
         System.out.println("All flags and parameter names and values are case sensitive.");
-        System.out.println("help flag may be ? or /help.");
     }
 
     private void getParamValue(Params p, int index, String token, String[] paramValues) throws Exception {
