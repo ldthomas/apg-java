@@ -1,5 +1,5 @@
 // This class has been generated automatically
-// from an SABNF grammar by Java APG, Verision 1.1.
+// from an SABNF grammar by Java APG, Verision 1.1.0.
 // Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
 // Licensed under the 2-Clause BSD License.
 
@@ -8,7 +8,7 @@ package examples.inifile;
 import apg.Grammar;
 import java.io.PrintStream;
 /** This class has been generated automatically from an SABNF grammar by
- * the {@link apg.Generator} class of Java APG, Version 1.1.<br>
+ * the {@link apg.Generator} class of Java APG, Version 1.1.0.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
@@ -245,7 +245,7 @@ public class IniFile extends Grammar{
      * @param out the output device to display on.*/
     public static void display(PrintStream out){
         out.println(";");
-        out.println("; examples.inifile.IniFile");
+        out.println("; example.inifile.IniFile");
         out.println(";");
         out.println("IniFile         = *BlankLine *Section");
         out.println("Section         = SectionLine *(BlankLine/ValueLine)");

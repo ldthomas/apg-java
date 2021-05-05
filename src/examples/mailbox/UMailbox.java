@@ -1,5 +1,5 @@
 // This class has been generated automatically
-// from an SABNF grammar by Java APG, Verision 1.1.
+// from an SABNF grammar by Java APG, Verision 1.1.0.
 // Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
 // Licensed under the 2-Clause BSD License.
 
@@ -8,7 +8,7 @@ package examples.mailbox;
 import apg.Grammar;
 import java.io.PrintStream;
 /** This class has been generated automatically from an SABNF grammar by
- * the {@link apg.Generator} class of Java APG, Version 1.1.<br>
+ * the {@link apg.Generator} class of Java APG, Version 1.1.0.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>

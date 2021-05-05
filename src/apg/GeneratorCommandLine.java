@@ -150,7 +150,7 @@ class GeneratorCommandLine {
             }
         } catch (Exception e) {
             displayHelpScreen(e.getMessage(), args);
-            return;
+            System.exit(0);
         }
 
         if (flagValues[Flags.VERBOSE.ordinal()]) {
