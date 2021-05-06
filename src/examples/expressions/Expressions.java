@@ -14,8 +14,6 @@ import java.io.PrintStream;
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static,
  * singleton instance of the class.
- * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>
- * <a href="https://opensource.org/licenses/BSD-2-Clause">2-Clause BSD License</a>
  */
 
 public class Expressions extends Grammar{
@@ -147,7 +145,7 @@ public class Expressions extends Grammar{
      * @param out the output device to display on.*/
     public static void display(PrintStream out){
         out.println(";");
-        out.println("; example.expressions.Expressions");
+        out.println("; examples.expressions.Expressions");
         out.println(";");
         out.println(";");
         out.println("; Grammar (4.2) - Modified for ABNF syntax");

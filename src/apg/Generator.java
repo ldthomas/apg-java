@@ -474,8 +474,6 @@ public class Generator {
                 + " * in the base class.<br>\n"
                 + " * The function {@link #getInstance()} will return a reference to a static,\n"
                 + " * singleton instance of the class.\n"
-                + " * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>\n"
-                + " * <a href=\"https://opensource.org/licenses/BSD-2-Clause\">2-Clause BSD License</a>\n"
                 + " */";
         String singleton = "    /** Called to get a singleton instance of this class.\n"
                 + "     * @return a singleton instance of this class, cast as the base class, Grammar. */";

@@ -14,8 +14,6 @@ import java.io.PrintStream;
  * in the base class.<br>
  * The function {@link #getInstance()} will return a reference to a static,
  * singleton instance of the class.
- * <br>Copyright (c) 2021 Lowell D. Thomas, all rights reserved<br>
- * <a href="https://opensource.org/licenses/BSD-2-Clause">2-Clause BSD License</a>
  */
 
 public class Comment extends Grammar{
