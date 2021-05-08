@@ -1,9 +1,14 @@
+// This class has been generated automatically
+// from an SABNF grammar by Java APG, Verision 1.1.0.
+// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+// Licensed under the 2-Clause BSD License.
+
 package examples.inifile;
 
 import apg.Grammar;
 import java.io.PrintStream;
-/** This class has been generated automatically from an SABNF grammer by
- * Java APG, the {@link apg.Generator} class.<br>
+/** This class has been generated automatically from an SABNF grammar by
+ * the {@link apg.Generator} class of Java APG, Version 1.1.0.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
@@ -142,6 +147,11 @@ public class UIniFile extends Grammar{
         // opcodes
     private static Opcode[] getOpcodes(){
     	Opcode[] op = new Opcode[65];
+    	addOpcodes00(op);
+        return op;
+    }
+
+    private static void addOpcodes00(Opcode[] op){
         {int[] a = {1,5}; op[0] = getOpcodeCat(a);}
         op[1] = getOpcodeRep((char)0, Character.MAX_VALUE, 2);
         {int[] a = {3,4}; op[2] = getOpcodeCat(a);}
@@ -207,7 +217,6 @@ public class UIniFile extends Grammar{
         op[62] = getOpcodeUdt(6); // u_alphadigit
         op[63] = getOpcodeUdt(7); // u_dqstring
         op[64] = getOpcodeUdt(8); // u_sqstring
-        return op;
     }
 
     /** Displays the original SABNF grammar on the output device.

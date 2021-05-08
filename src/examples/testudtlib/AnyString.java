@@ -1,9 +1,14 @@
+// This class has been generated automatically
+// from an SABNF grammar by Java APG, Verision 1.1.0.
+// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+// Licensed under the 2-Clause BSD License.
+
 package examples.testudtlib;
 
 import apg.Grammar;
 import java.io.PrintStream;
-/** This class has been generated automatically from an SABNF grammer by
- * Java APG, the {@link apg.Generator} class.<br>
+/** This class has been generated automatically from an SABNF grammar by
+ * the {@link apg.Generator} class of Java APG, Version 1.1.0.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
@@ -83,12 +88,16 @@ public class AnyString extends Grammar{
         // opcodes
     private static Opcode[] getOpcodes(){
     	Opcode[] op = new Opcode[5];
+    	addOpcodes00(op);
+        return op;
+    }
+
+    private static void addOpcodes00(Opcode[] op){
         op[0] = getOpcodeRep((char)0, Character.MAX_VALUE, 1);
         op[1] = getOpcodeRnm(1, 2); // any
         {int[] a = {3,4}; op[2] = getOpcodeAlt(a);}
         op[3] = getOpcodeTrg((char)32, (char)126);
         {char[] a = {9}; op[4] = getOpcodeTbs(a);}
-        return op;
     }
 
     /** Displays the original SABNF grammar on the output device.

@@ -1,3 +1,11 @@
+/*  ******************************************************************************
+    Copyright (c) 2021, Lowell D. Thomas
+    All rights reserved.
+    
+    This file is part of Java APG Version 1.1.0.
+    Java APG Version 1.1.0 may be used under the terms of the 2-Clause BSD License.
+    
+*   ******************************************************************************/
 package examples.expressions;
 
 import java.io.PrintStream;
@@ -6,69 +14,75 @@ import apg.Parser;
 import apg.UdtLib.*;
 import examples.RunTests;
 
-/** Uses the the Expressions grammar (4.2)
-from Aho, Lam, Sethi and Ullman, 2nd ed. (the Dragon Book) 
-for a comparison of timing and node hits between the normal 
-CFG grammar and the use of UDT functions.
+/**
+ * Uses the the Expressions grammar (4.2) from Aho, Lam, Sethi and Ullman, 2nd
+ * ed. (the Dragon Book) for a comparison of timing and node hits between the
+ * normal CFG grammar and the use of UDT functions.
  */
-public class RunExpressions extends RunTests{
-	/**
-	 * Constructor for the test. Parameters are supplied
-	 * explicitly or by default from the command line to the driver function.
-	 * @param testName the name of the test
-	 * @param reps the number of repetitions of the parser 
-	 * @param out the output device
-	 */
-	public RunExpressions(String testName, int reps, PrintStream out){
-		super(testName, reps, out);
-	}
+public class RunExpressions extends RunTests {
 
-	@Override protected void run() throws Exception{
-		setup();
-		runComparisionOfCfgAndUdt();
-	}
-	
-	void setup() throws Exception{
-		// display the title and an abstract
-		if(testName != null){outputTestName();}
-		else{throw new Exception("testName may not be null");}
-		outputAbstract("CFG/UDT time & statistics comparison for the Expressions grammar");
-		out.println();
-		
-		// display the grammars
-		outputCfgGrammar();
-		Expressions.display(out);
-		out.println();
-		outputUdtGrammar();
-		UExpressions.display(out);
-		out.println();
+    /**
+     * Constructor for the test. Parameters are supplied explicitly or by
+     * default from the command line to the driver function.
+     *
+     * @param testName the name of the test
+     * @param reps the number of repetitions of the parser
+     * @param out the output device
+     */
+    public RunExpressions(String testName, int reps, PrintStream out) {
+        super(testName, reps, out);
+    }
 
-		// set up input strings
-		if(inputStrings == null          ||
-				inputStrings.length == 0 ||
-				inputStrings[0] == null  ||
-				inputStrings[0].length() == 0){
-			inputStringCount = 5;
-			inputStrings = new String[inputStringCount];
-			inputStrings[0] = "a+b";
-			inputStrings[1] = "a+b*c";
-			inputStrings[2] = "(a+b)*(c+d)";
-			inputStrings[3] = "a+b*c+(LevelOne*(LevelTwoA+LevelTwoB))";
-			inputStrings[4] = "(a+b)*(c+(d+e*(topA+topB)))";
-		}
-		
-		// CFG grammar-dependent setup
-		int startRule = Expressions.RuleNames.E.ruleID(); // grammar.RuleNames.RULE.ruldID();
-		cfgIn = new RunInput("cfg", new Parser(Expressions.getInstance()), startRule);
+    @Override
+    protected void run() throws Exception {
+        setup();
+        runComparisionOfCfgAndUdt();
+    }
 
-		// UDT grammar-dependent setup
-		Parser udtParser = new Parser(UExpressions.getInstance());
-		startRule = UExpressions.RuleNames.E.ruleID();
-		
-		// UDT callback functions
-		udtParser.setUdtCallback(UExpressions.UdtNames.U_ID.udtID(), new Alphanum(udtParser));
-		udtIn = new RunInput("udt", udtParser, startRule);
-	}
+    void setup() throws Exception {
+        // display the title and an abstract
+        if (testName != null) {
+            outputTestName();
+        } else {
+            throw new Exception("testName may not be null");
+        }
+        outputAbstract("CFG/UDT time & statistics comparison for the Expressions grammar");
+        out.println();
+
+        // display the grammars
+        outputCfgGrammar();
+        Expressions.display(out);
+        out.println();
+        outputUdtGrammar();
+        UExpressions.display(out);
+        out.println();
+
+        // set up input strings
+        if (inputStrings == null
+                || inputStrings.length == 0
+                || inputStrings[0] == null
+                || inputStrings[0].length() == 0) {
+            inputStringCount = 5;
+            inputStrings = new String[inputStringCount];
+            inputStrings[0] = "a+b";
+            inputStrings[1] = "a+b*c";
+            inputStrings[2] = "(a+b)*(c+d)";
+            inputStrings[3] = "a+b*c+(LevelOne*(LevelTwoA+LevelTwoB))";
+            inputStrings[4] = "(a+b)*(c+(d+e*(topA+topB)))";
+        }
+
+        // CFG grammar-dependent setup
+        int startRule = Expressions.RuleNames.E.ruleID(); // grammar.RuleNames.RULE.ruldID();
+        cfgIn = new RunInput("cfg", new Parser(Expressions.getInstance()), startRule);
+
+        // UDT grammar-dependent setup
+        Parser udtParser = new Parser(UExpressions.getInstance());
+        startRule = UExpressions.RuleNames.E.ruleID();
+
+        // UDT callback functions
+        udtParser.setUdtCallback(UExpressions.UdtNames.U_ID.udtID(), new Alphanum(udtParser));
+        udtIn = new RunInput("udt", udtParser, startRule);
+    }
 }
 //void runDemo() throws Exception{
 //title = "*** Expressions, simple demo ***";

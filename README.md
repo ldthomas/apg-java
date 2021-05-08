@@ -1,6 +1,8 @@
-## Java APG
+﻿## Java APG
 
-**Version:** 1.0
+**Version:** 1.1.0
+
+*Note:* Version 1.1.0 updates version 1.0 in a couple of ways. Primarily, the license is changed to the more permissive 2-Clause BSD license. Also, in the installation section below are instructions on how to include Java APG in a [maven](https://maven.apache.org/) project. I want to thank [Raviteja Lokineni](https://github.com/bond-) (@bond-) for suggesting these changes and especially [Stephen Sill II](https://github.com/ssill2) (@ssill2) for his friendly and expert nudging of me up the maven learning curve. (See issue #6.)
 
 **Description:**
 
@@ -39,7 +41,7 @@ For more details see the documentation or visit the <a href="https://sabnf.com">
 | src/examples/mailbox     | Comparisons the CFG and UDT parsers for the mailbox grammar ().                                                                                                                                                                     |
 | src/examples/testudtlib  | Comparisons the CFG and UDT parsers for the suite of UdtLib UDTs.                                                                                                                                                                   |
 | build/                   | Scripts and files for compiling and documenting Java APG.                                                                                                                                                                           |
-| LICENSE                  | Version 2 of the GNU General Public License.                                                                                                                                                                                        |
+| LICENSE.md                  | 2-Clause BSD license.                                                                                                                                                                                        |
 | README.md                | This file.                                                                                                                                                                                                                          |
 
 **Installation:**
@@ -47,8 +49,8 @@ The `build/` directory has scripts and files for compiling and documenting Java 
 To compile all source code and create the package `.jar` files:
 
 ```
-cd (repo directory)
-cd build
+git clone https://github.com/ldthomas/apg-java.git
+cd apg-java/build
 ./make-jars
 ```
 
@@ -57,18 +59,29 @@ This will create `apg.jar` and `examples.jar`. To test `apg.jar` run:
 ```
 java -jar apg.jar /version
 ```
-
 To test `examples.jar` run:
+```
+java -jar examples.jar /test=all
+```
+**Maven:**
+For maven development, install apg.jar in the local repository.
+```
+mvn install:install-file -DgroupId=com.sabnf -DartifactId=apg -Dversion=1.1-SNAPSHOT -Dpackaging=jar -Dfile=apg.jar -DgeneratePom=true
+```
+Then modify the project's pom.xml file to include,
+```
+<dependencies>
+    <dependency>
+        <groupId>com.sabnf</groupId>
+        <artifactId>apg</artifactId>
+        <version>1.1-SNAPSHOT</version>
+        <scope>compile</scope>
+    </dependency>
+</dependencies>
 
-```
-java -jar examples.jar /help
-```
+``` 
+See the [maven.md](maven.md) for details on how to run the examples in a NetBeans maven project.
 
-or better
-
-```
-java -jar examples.jar /test=demo-ast
-```
 
 **Documentation:**  
 To see the documentation run:
@@ -80,8 +93,8 @@ To see the documentation run:
 Open `../javadoc/index.html` in any web browser. Or visit the [APG website](https://sabnf.com).
 
 **Copyright:**  
- _Copyright &copy; 2011 Lowell D. Thomas, all rights reserved_
+ _Copyright &copy; 2021 Lowell D. Thomas, all rights reserved_
 
 **License:**  
- Java APG Version 1.0 is released under Version 2.0 or higher of the
-<a href="https://www.gnu.org/licenses/licenses.html">GNU General Public License</a>.
+ Java APG Version 1.1.0 is released under the [2-Clause BSD license](https://opensource.org/licenses/BSD-2-Clause).
+

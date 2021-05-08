@@ -12,3 +12,6 @@ cmsg
 README.html
 RemoteSystemsTempFiles
 /bin/
+how-to.txt
+grammar-regen.sh
+/src/examples/target/

@@ -1,3 +1,11 @@
+/*  ******************************************************************************
+    Copyright (c) 2021, Lowell D. Thomas
+    All rights reserved.
+    
+    This file is part of Java APG Version 1.1.0.
+    Java APG Version 1.1.0 may be used under the terms of the 2-Clause BSD License.
+    
+*   ******************************************************************************/
 package examples.anbn;
 
 import apg.Parser;
@@ -5,68 +13,75 @@ import examples.RunTests;
 
 import java.io.PrintStream;
 
-/** Uses the grammar for the strings a<sup>n</sup>b<sup>n</sup>, n &gt; 0, for
-a comparison of timing and node hits between the normal 
-CFG grammar and the use of UDT functions.
+/**
+ * Uses the grammar for the strings a<sup>n</sup>b<sup>n</sup>, n &gt; 0, for a
+ * comparison of timing and node hits between the normal CFG grammar and the use
+ * of UDT functions.
  */
-public class RunAnBn extends RunTests{
-	/**
-	 * Constructor for the test. Parameters are supplied
-	 * explicitly or by default from the command line to the driver function.
-	 * @param testName the name of the test
-	 * @param reps the number of repetitions of the parser 
-	 * @param out the output device
-	 */
-	public RunAnBn(String testName, int reps, PrintStream out){
-		super(testName, reps, out);
-	}
-	
-	@Override protected void run() throws Exception{
-		setupForCompare();
-		runComparisionOfCfgAndUdt();
-	}
+public class RunAnBn extends RunTests {
 
-	// Sets up the parser, input strings, CFG and UDT grammars for the 
-	// time and node statistics comparisons. 
-	private void setupForCompare() throws Exception{
-		// display the title and an abstract
-		if(testName != null){outputTestName();}
-		else{throw new Exception("testName may not be null");}
-		outputAbstract("CFG/UDT time & statistics comparison for the a^nb^n grammar");
-		out.println();
-		
-		// display the grammars
-		outputCfgGrammar();
-		AnBn.display(out);
-		out.println();
-		outputUdtGrammar();
-		UAnBn.display(out);
-		out.println();
+    /**
+     * Constructor for the test. Parameters are supplied explicitly or by
+     * default from the command line to the driver function.
+     *
+     * @param testName the name of the test
+     * @param reps the number of repetitions of the parser
+     * @param out the output device
+     */
+    public RunAnBn(String testName, int reps, PrintStream out) {
+        super(testName, reps, out);
+    }
 
-		// set up input strings
-		inputStringCount = 10;
-		inputStrings = new String[inputStringCount];
-		inputStrings[0] = "ab";
-		inputStrings[1] = "aabb";
-		inputStrings[2] = "aaabbb";
-		inputStrings[3] = "aaaabbbb";
-		inputStrings[4] = "aaaaabbbbb";
-		inputStrings[5] = "aaaaaabbbbbb";
-		inputStrings[6] = "aaaaaaabbbbbbb";
-		inputStrings[7] = "aaaaaaaabbbbbbbb";
-		inputStrings[8] = "aaaaaaaaabbbbbbbbb";
-		inputStrings[9] = "aaaaaaaaaabbbbbbbbbb";
+    @Override
+    protected void run() throws Exception {
+        setupForCompare();
+        runComparisionOfCfgAndUdt();
+    }
 
-		// CFG grammar-dependent setup
-		int startRule = AnBn.RuleNames.ANBN.ruleID(); // grammar.RuleNames.RULE.ruldID();
-		cfgIn = new RunInput("cfg", new Parser(AnBn.getInstance()), startRule);
+    // Sets up the parser, input strings, CFG and UDT grammars for the 
+    // time and node statistics comparisons. 
+    private void setupForCompare() throws Exception {
+        // display the title and an abstract
+        if (testName != null) {
+            outputTestName();
+        } else {
+            throw new Exception("testName may not be null");
+        }
+        outputAbstract("CFG/UDT time & statistics comparison for the a^nb^n grammar");
+        out.println();
 
-		// UDT grammar-dependent setup
-		Parser parser = new Parser(UAnBn.getInstance());
-		startRule = UAnBn.RuleNames.ANBN.ruleID();
-		parser.setUdtCallback(UAnBn.UdtNames.U_ANBN.udtID(), new HandwrittenAnBn(parser));
-		udtIn = new RunInput("udt", parser, startRule);
-	}
+        // display the grammars
+        outputCfgGrammar();
+        AnBn.display(out);
+        out.println();
+        outputUdtGrammar();
+        UAnBn.display(out);
+        out.println();
+
+        // set up input strings
+        inputStringCount = 10;
+        inputStrings = new String[inputStringCount];
+        inputStrings[0] = "ab";
+        inputStrings[1] = "aabb";
+        inputStrings[2] = "aaabbb";
+        inputStrings[3] = "aaaabbbb";
+        inputStrings[4] = "aaaaabbbbb";
+        inputStrings[5] = "aaaaaabbbbbb";
+        inputStrings[6] = "aaaaaaabbbbbbb";
+        inputStrings[7] = "aaaaaaaabbbbbbbb";
+        inputStrings[8] = "aaaaaaaaabbbbbbbbb";
+        inputStrings[9] = "aaaaaaaaaabbbbbbbbbb";
+
+        // CFG grammar-dependent setup
+        int startRule = AnBn.RuleNames.ANBN.ruleID(); // grammar.RuleNames.RULE.ruldID();
+        cfgIn = new RunInput("cfg", new Parser(AnBn.getInstance()), startRule);
+
+        // UDT grammar-dependent setup
+        Parser parser = new Parser(UAnBn.getInstance());
+        startRule = UAnBn.RuleNames.ANBN.ruleID();
+        parser.setUdtCallback(UAnBn.UdtNames.U_ANBN.udtID(), new HandwrittenAnBn(parser));
+        udtIn = new RunInput("udt", parser, startRule);
+    }
 }
 //private void runDemo() throws Exception{
 //// print the test title and an abstract of what it does

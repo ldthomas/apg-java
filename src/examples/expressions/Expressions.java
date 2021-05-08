@@ -1,9 +1,14 @@
+// This class has been generated automatically
+// from an SABNF grammar by Java APG, Verision 1.1.0.
+// Copyright (c) 2021 Lowell D. Thomas, all rights reserved.
+// Licensed under the 2-Clause BSD License.
+
 package examples.expressions;
 
 import apg.Grammar;
 import java.io.PrintStream;
-/** This class has been generated automatically from an SABNF grammer by
- * Java APG, the {@link apg.Generator} class.<br>
+/** This class has been generated automatically from an SABNF grammar by
+ * the {@link apg.Generator} class of Java APG, Version 1.1.0.<br>
  * It is an extension of the {@link apg.Grammar}
  * class containing additional members and enums not found
  * in the base class.<br>
@@ -95,6 +100,11 @@ public class Expressions extends Grammar{
         // opcodes
     private static Opcode[] getOpcodes(){
     	Opcode[] op = new Opcode[34];
+    	addOpcodes00(op);
+        return op;
+    }
+
+    private static void addOpcodes00(Opcode[] op){
         {int[] a = {1,2}; op[0] = getOpcodeCat(a);}
         op[1] = getOpcodeRnm(2, 9); // T
         op[2] = getOpcodeRnm(1, 3); // Eprime
@@ -129,7 +139,6 @@ public class Expressions extends Grammar{
         op[31] = getOpcodeTrg((char)65, (char)90);
         op[32] = getOpcodeTrg((char)97, (char)122);
         op[33] = getOpcodeTrg((char)48, (char)57);
-        return op;
     }
 
     /** Displays the original SABNF grammar on the output device.
