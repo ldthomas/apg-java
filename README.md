@@ -2,7 +2,7 @@
 
 **Version:** 1.1.0
 
-*Note:* Version 1.1.0 updates version 1.0 in a couple of ways. Primarily, the license is changed to the more permissive 2-Clause BSD license. Also, in the installation section below are instructions on how to include Java APG in a [maven](https://maven.apache.org/) project.
+*Note:* Version 1.1.0 updates version 1.0 in a couple of ways. Primarily, the license is changed to the more permissive 2-Clause BSD license. Also, in the installation section below are instructions on how to include Java APG in a [maven](https://maven.apache.org/) project. I want to thank [Raviteja Lokineni](https://github.com/bond-) (@bond-) for suggesting these changes and especially [Stephen Sill II](https://github.com/ssill2) (@ssill2) for his friendly and expert nudging of me up the maven learning curve. (See issue #6.)
 
 **Description:**
 
@@ -63,17 +63,13 @@ To test `examples.jar` run:
 ```
 java -jar examples.jar /test=all
 ```
-**maven:**
+**Maven:**
 For maven development, install apg.jar in the local repository.
 ```
 mvn install:install-file -DgroupId=com.sabnf -DartifactId=apg -Dversion=1.1-SNAPSHOT -Dpackaging=jar -Dfile=apg.jar -DgeneratePom=true
 ```
-Then modify the project's pom.xml file to include (assuming maven 3.8.1 and JDK 11):
+Then modify the project's pom.xml file to include,
 ```
-<properties>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-</properties>
 <dependencies>
     <dependency>
         <groupId>com.sabnf</groupId>
@@ -84,6 +80,8 @@ Then modify the project's pom.xml file to include (assuming maven 3.8.1 and JDK 
 </dependencies>
 
 ``` 
+See the [maven.md](maven.md) for details on how to run the examples in a NetBeans maven project.
+
 
 **Documentation:**  
 To see the documentation run:
