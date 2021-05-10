@@ -16,3 +16,4 @@ how-to.txt
 grammar-regen.sh
 /src/examples/target/
 target
+/nbproject/
