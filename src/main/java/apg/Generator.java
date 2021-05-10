@@ -123,12 +123,12 @@ public class Generator {
 
             String inputParam = cl.paramValues[GeneratorCommandLine.Params.INPUT.ordinal()];
             if (inputParam == null
-                    || inputParam.equals("")) {
+                    || inputParam.isBlank()) {
                 throw new Exception("required input file parameter, " + Params.INPUT.prefix() + "filename, is missing");
             }
             // working directory
             workingDir = cl.paramValues[GeneratorCommandLine.Params.WORKING_DIR.ordinal()];
-            if (workingDir == null || workingDir == "") {
+            if (workingDir == null || workingDir.isBlank()) {
                 workingDir = null;
             } else {
                 File file = new File(workingDir);
@@ -139,7 +139,7 @@ public class Generator {
 
             // log file
             fileName = cl.paramValues[GeneratorCommandLine.Params.LOGFILE.ordinal()];
-            if (fileName == null || fileName == "") {
+            if (fileName == null || fileName.isBlank()) {
                 System.out.println("console: using console screen");
             } else {
                 File file = getFile(workingDir, fileName);
@@ -157,7 +157,7 @@ public class Generator {
 
             // the input string
             fileName = cl.paramValues[GeneratorCommandLine.Params.INPUT.ordinal()];
-            if ((fileName == null || fileName == "")) {
+            if ((fileName == null || fileName.isBlank())) {
                 throw new AssertionError("required input file name missing");
             } else {
                 // RHA: check all input files
@@ -411,17 +411,17 @@ public class Generator {
     private static File getFile(String dir, String filename) {
         File ret = null;
         while (true) {
-            if (filename == null || filename == "") {
+            if (filename == null || filename.isBlank()) {
                 break;
             }
             File test = new File(filename);
-            if (filename == test.getAbsolutePath()) {
+            if (filename.equals(test.getAbsolutePath())) {
                 // file name is absolute - use it
                 ret = new File(filename);
                 break;
             }
 
-            if (dir == null || dir == "") {
+            if (dir == null || dir.isBlank()) {
                 // dir is empty - use just the file name
                 ret = new File(filename);
                 break;
@@ -435,7 +435,7 @@ public class Generator {
     }
 
     private static String toUpperUnderscore(String string) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         String ret = null;
         while (true) {
             if (string == null || string.length() == 0) {
@@ -530,7 +530,7 @@ public class Generator {
             out.print(";\n\n");
             out.print("import apg.Grammar;\n");
             out.print("import java.io.PrintStream;\n");
-            if (javadoc) {
+            if (jd != null) {
                 out.println(jd.header);
             }
             out.print("\n");
@@ -539,7 +539,7 @@ public class Generator {
             Set<Map.Entry<String, Integer>> set = ruleMap.entrySet();
             ruleCount = set.size();
             out.print("    // public API\n");
-            if (javadoc) {
+            if (jd != null) {
                 out.println(jd.singleton);
             }
             out.print("    public static Grammar getInstance(){\n");
@@ -552,7 +552,7 @@ public class Generator {
             out.print("    }\n");
             out.print("\n");
             out.print("    // rule name enum\n");
-            if (javadoc) {
+            if (jd != null) {
                 out.println(jd.numRules);
             }
             out.print("    public static int ruleCount = ");
@@ -561,7 +561,7 @@ public class Generator {
             lineEnd = "        ";
             javadocEnd = lineEnd;
             if (ruleCount > 0) {
-                if (javadoc) {
+                if (jd != null) {
                     out.println(jd.getEnumDoc("rule"));
                 }
                 out.print("    public enum RuleNames{\n");
@@ -570,7 +570,7 @@ public class Generator {
                     int index = entry.getValue();
                     SyntaxRule rule = rules.elementAt(index);
                     out.print(lineEnd);
-                    if (javadoc) {
+                    if (jd != null) {
                         out.println(jd.getEnumConstant(index, rule.name));
                         out.print(javadocEnd);
                     }
@@ -600,11 +600,11 @@ public class Generator {
                 out.print("            this.offset = offset;\n");
                 out.print("            this.count = count;\n");
                 out.print("        }\n");
-                if (javadoc) {
+                if (jd != null) {
                     out.println(jd.ruleName);
                 }
                 out.print("        public  String ruleName(){return name;}\n");
-                if (javadoc) {
+                if (jd != null) {
                     out.println(jd.ruleId);
                 }
                 out.print("        public  int    ruleID(){return id;}\n");
@@ -616,13 +616,13 @@ public class Generator {
             set = udtMap.entrySet();
             udtCount = set.size();
             out.print("    // UDT name enum\n");
-            if (javadoc) {
+            if (jd != null) {
                 out.println(jd.numUdts);
             }
             out.print("    public static int udtCount = ");
             out.print(udtCount);
             out.print(";\n");
-            if (javadoc) {
+            if (jd != null) {
                 out.println(jd.getEnumDoc("UDT"));
             }
             out.print("    public enum UdtNames{\n");
@@ -633,7 +633,7 @@ public class Generator {
                     int index = entry.getValue();
                     SyntaxRule udt = udts.elementAt(index);
                     out.print(lineEnd);
-                    if (javadoc) {
+                    if (jd != null) {
                         out.println(jd.getEnumConstant(index, udt.name));
                         out.print(javadocEnd);
                     }
@@ -658,15 +658,15 @@ public class Generator {
                 out.print("            this.id = id;\n");
                 out.print("            this.empty = empty;\n");
                 out.print("        }\n");
-                if (javadoc) {
+                if (jd != null) {
                     out.println(jd.udtName);
                 }
                 out.print("        public String  udtName(){return name;}\n");
-                if (javadoc) {
+                if (jd != null) {
                     out.println(jd.udtId);
                 }
                 out.print("        public int     udtID(){return id;}\n");
-                if (javadoc) {
+                if (jd != null) {
                     out.println(jd.udtEmpty);
                 }
                 out.print("        public boolean udtMayBeEmpty(){return empty;}\n");
@@ -693,7 +693,6 @@ public class Generator {
             out.print("        return rules;\n");
             out.print("    }\n");
             out.print("\n");
-            set = udtMap.entrySet();
             out.print("    private static Udt[] getUdts(){\n");
             out.print("    	Udt[] udts = new Udt[");
             out.print(udtCount);
@@ -874,7 +873,7 @@ public class Generator {
             out.print("\n");
 
             // generate a "display()" function which will display the original SABNF grammar
-            if (javadoc) {
+            if (jd != null) {
                 out.println(jd.display);
             }
             out.print("    public static void display(PrintStream out){\n");
@@ -897,8 +896,8 @@ public class Generator {
     }
 
     private static String sanitizeLine(String line) {
-        StringBuffer buf = new StringBuffer();
-        if (!(line == null || line.length() == 0)) {
+        StringBuilder buf = new StringBuilder();
+        if (line != null && !line.isBlank()) {
             char[] lineChars = line.toCharArray();
             for (char c : lineChars) {
                 if (c == '"') {

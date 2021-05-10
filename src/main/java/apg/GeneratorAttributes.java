@@ -48,7 +48,7 @@ class GeneratorAttributes {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         Comparator<SyntaxRule> compare = new NameComparator();
         SyntaxRule[] ruleList = new SyntaxRule[rules.size()];
         int i = 0;
@@ -156,7 +156,7 @@ class GeneratorAttributes {
         }
     }
 
-    private class Attrs {
+    private class Attrs implements Cloneable {
 
         private static final char YES = 'o';
         private static final char NO = '-';
@@ -189,7 +189,8 @@ class GeneratorAttributes {
         }
 
         @Override
-        public Attrs clone() {
+        public Attrs clone() throws CloneNotSupportedException {
+            super.clone();
             Attrs attrs = new Attrs();
             copy(attrs);
             attrs.refs = this.refs;
