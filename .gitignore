@@ -17,3 +17,4 @@ grammar-regen.sh
 /src/examples/target/
 target
 /nbproject/
+jshell.history
