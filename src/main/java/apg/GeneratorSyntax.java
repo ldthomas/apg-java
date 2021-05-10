@@ -71,13 +71,13 @@ class GeneratorSyntax {
         GeneratorSyntax.lineCatalog = catalog;
         GeneratorSyntax.currentID = 0;
         GeneratorSyntax.currentRule = new SyntaxRule();
-        GeneratorSyntax.ruleMap = new TreeMap<String, Integer>();
-        GeneratorSyntax.rules = new Vector<SyntaxRule>();
-        GeneratorSyntax.opcodes = new Stack<SyntaxOpcode>();
-        GeneratorSyntax.udtMap = new TreeMap<String, Integer>();
-        GeneratorSyntax.udts = new Vector<SyntaxRule>();
-        GeneratorSyntax.parentStack = new Stack<SyntaxOpcode>();
-        GeneratorSyntax.tbs = new Vector<Character>();
+        GeneratorSyntax.ruleMap = new TreeMap<>();
+        GeneratorSyntax.rules = new Vector<>();
+        GeneratorSyntax.opcodes = new Stack<>();
+        GeneratorSyntax.udtMap = new TreeMap<>();
+        GeneratorSyntax.udts = new Vector<>();
+        GeneratorSyntax.parentStack = new Stack<>();
+        GeneratorSyntax.tbs = new Vector<>();
     }
 
     static class SyntaxRule {
@@ -90,7 +90,7 @@ class GeneratorSyntax {
         int opcodeOffset;
         int opcodeCount;
 
-        void clear() {
+        final void clear() {
             errorsReported = 0;
             lineno = -1;
             name = null;
@@ -116,7 +116,7 @@ class GeneratorSyntax {
 
         @Override
         public String toString() {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("rule name: ");
             buf.append(name);
             buf.append("\n");
@@ -143,7 +143,7 @@ class GeneratorSyntax {
         int lineno;
         int index;
         Type type;
-        Vector<SyntaxOpcode> childOpcodes = new Vector<SyntaxOpcode>();
+        Vector<SyntaxOpcode> childOpcodes = new Vector<>();
 
         // RNM, UDT
         int id;
@@ -159,7 +159,7 @@ class GeneratorSyntax {
         // TLS, TBS
         char[] string;
 
-        private void printChildren(StringBuffer buf, Vector<SyntaxOpcode> c) {
+        private void printChildren(StringBuilder buf, Vector<SyntaxOpcode> c) {
             if (c == null) {
                 return;
             }
@@ -173,7 +173,7 @@ class GeneratorSyntax {
 
         @Override
         public String toString() {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("[");
             buf.append(index);
             buf.append("]");
@@ -309,7 +309,7 @@ class GeneratorSyntax {
         @Override
         public String toString() {
             Set<Map.Entry<String, RuleRefEntry>> set;
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("SyntaxMetrics:\n");
             buf.append("  rules: " + rules + "\n");
             buf.append("   udts: " + udts + "\n");

@@ -47,7 +47,7 @@ class Utils {
             }
         }
 
-        public void clear() {
+        public final void clear() {
             started = false;
             start = 0;
             end = 0;

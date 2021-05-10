@@ -168,7 +168,7 @@ class GeneratorAttributes {
             clear();
         }
 
-        void clear() {
+        final void clear() {
             this.refs = 0;
             this.open = false;
             this.left = false;

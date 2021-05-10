@@ -57,7 +57,7 @@ public class Trace {
      * set is to trace all rule name and all UDT operator nodes only. All other
      * operators are not trace.
      */
-    public void enableDefaultNodes() {
+    public final  void enableDefaultNodes() {
         enableAllNodes(false);
         enableAllRules(true);
         enableAllUdts(true);
@@ -422,13 +422,13 @@ public class Trace {
     }
 
     // private
-    private Parser parser;
-    private String traceRoot = "TRACE_ROOT";
+    private final Parser parser;
+    private final String traceRoot = "TRACE_ROOT";
     private PrintStream out = System.out;
-    private Utilities.XMLWriter writer = new Utilities.XMLWriter(out);
+    private final Utilities.XMLWriter writer = new Utilities.XMLWriter(out);
     private int treeDepth = 0;
     private int tag = 0;
-    private Stack<Integer> stack = new Stack<Integer>();
+    private final Stack<Integer> stack = new Stack<>();
     private final int ruleCount;
     private final int udtCount;
     private final int suffixMaxChars;
@@ -443,8 +443,8 @@ public class Trace {
     private boolean trg;
     private boolean tbs;
     private boolean tls;
-    private boolean[] rnmList;
-    private boolean[] udtList;
+    private final  boolean[] rnmList;
+    private final boolean[] udtList;
 
     private String[] opcodeXMLAttrs(int tag, Opcode opcode) throws Exception {
         String[] ret;
