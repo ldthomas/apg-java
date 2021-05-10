@@ -10,6 +10,7 @@ package apg;
 // <code></code>
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.ListIterator;
 
@@ -20,6 +21,10 @@ import java.util.ListIterator;
  */
 public class Utilities {
 
+    private static final String LINE_ENDING_LF = "<LF>";
+    private static final String LINE_ENDING_CR = "<CR>";
+    private static final String LINE_ENDING_CRLF = "<CRLF>";
+    
     private Utilities() {
     }
 
@@ -32,7 +37,7 @@ public class Utilities {
      * @return a String of "length" spaces
      */
     public static String indent(int length) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < length; i++) {
             buf.append(" ");
         }
@@ -83,7 +88,7 @@ public class Utilities {
      * @return the String representation of the character array subset.
      */
     public static String charArrayToString(char[] input, int offset, int length, int maxChars) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         boolean inHex = false;
         if (length < 0) {
             length = input.length;
@@ -124,7 +129,7 @@ public class Utilities {
      * @return the XML representation of the character array subset.
      */
     public static String charArrayToXml(char[] input, int offset, int length) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         if (length < 0) {
             length = input.length;
         } else {
@@ -193,10 +198,10 @@ public class Utilities {
      */
     public static String getFileAsString(String workingDir, String fileName) throws
             NullPointerException, FileNotFoundException, IOException, Exception {
-        String ret = null;
+        String ret;
         File file;
-        if ((fileName == null || fileName == "")) {
-            throw new Exception("file name missing");
+        if ((fileName == null || fileName.isBlank())) {
+            throw new IllegalArgumentException("file name missing");
         } else {
             file = getFile(workingDir, fileName);
             if (file == null) {
@@ -207,17 +212,19 @@ public class Utilities {
                         "file \"" + file.getCanonicalPath() + "\" does not exist");
             }
         }
-        FileReader fr = new FileReader(file);
-        BufferedReader br = new BufferedReader(fr);
-        StringBuffer buf = new StringBuffer();
-        String eachLine = br.readLine();
+        
+        try (FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr)) {
+            StringBuilder buf = new StringBuilder();
+            String eachLine = br.readLine();
 
-        while (eachLine != null) {
-            buf.append(eachLine);
-            buf.append("\n");
-            eachLine = br.readLine();
+            while (eachLine != null) {
+                buf.append(eachLine);
+                buf.append("\n");
+                eachLine = br.readLine();
+            }
+            ret = buf.toString();
         }
-        ret = buf.toString();
         return ret;
     }
 
@@ -232,17 +239,17 @@ public class Utilities {
     public static File getFile(String dir, String filename) {
         File ret = null;
         while (true) {
-            if (filename == null || filename == "") {
+            if (filename == null || filename.isBlank()) {
                 break;
             }
             File test = new File(filename);
-            if (filename == test.getAbsolutePath()) {
+            if (filename.equals(test.getAbsolutePath())) {
                 // file name is absolute - use it
                 ret = new File(filename);
                 break;
             }
 
-            if (dir == null || dir == "") {
+            if (dir == null || dir.isBlank()) {
                 // dir is empty - use just the file name
                 ret = new File(filename);
                 break;
@@ -295,7 +302,7 @@ public class Utilities {
      * @return the Exception message and stack trace as a String.
      */
     public static String displayException(Exception e) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("\n");
         buf.append(e.getClass().getCanonicalName());
         buf.append(":\n");
@@ -318,7 +325,7 @@ public class Utilities {
      * @return the Error message and stack trace as a String.
      */
     public static String displayError(Error e) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("\n");
         buf.append(e.getClass().getCanonicalName());
         buf.append(":\n");
@@ -495,8 +502,8 @@ public class Utilities {
          */
         public LineCatalog(String inputString) throws IllegalArgumentException {
             char[] inputArray = inputString.toCharArray();
-            errors = new Vector<String>();
-            warnings = new Vector<String>();
+            errors = new ArrayList<>();
+            warnings = new ArrayList<>();
             catalog(inputArray);
         }
 
@@ -509,8 +516,8 @@ public class Utilities {
          * or empty.
          */
         public LineCatalog(char[] inputArray) throws IllegalArgumentException {
-            errors = new Vector<String>();
-            warnings = new Vector<String>();
+            errors = new ArrayList<>();
+            warnings = new ArrayList<>();
             catalog(inputArray);
         }
 
@@ -568,7 +575,7 @@ public class Utilities {
          */
         @Override
         public String toString() {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             ListIterator<Line> iter = getLineIterator();
             int maxPrefix = 0;
             while (iter.hasNext()) {
@@ -701,13 +708,13 @@ public class Utilities {
         }
 
         // LineCatalog private
-        private Vector<String> errors = null;
-        private Vector<String> warnings = null;
-        private Vector<Line> lineStore = new Vector<Line>();
+        private ArrayList<String> errors = null;
+        private ArrayList<String> warnings = null;
+        private final ArrayList<Line> lineStore = new ArrayList<>();
         private char[] originalChars;
 
         private String subString(char[] array, int fromIndex, int toIndex) {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             int count = toIndex - fromIndex + 1;
             for (int i = 0; i < count; i++) {
                 buf.append(array[fromIndex + i]);
@@ -726,8 +733,8 @@ public class Utilities {
             int offset = 0;
             int length = 0;
             int lineCount = 0;
-            String lineString = null;
-            String lineEndString = null;
+            String lineString;
+            String lineEndString;
             int i;
             for (i = 0; i < originalChars.length; i++) {
                 int ch = (int) originalChars[i];
@@ -743,14 +750,12 @@ public class Utilities {
                     } else {
                         lineString = subString(originalChars, offset, offset + length - 1);
                     }
-                    lineEndString = new String("<LF>");
+                    lineEndString = LINE_ENDING_LF;
                     length++; // LF line end
                     lineStore.add(new Line((lineStore.size() + 1), offset, length, lineString, lineEndString));
                     lineCount++;
                     offset += length;
                     length = 0;
-                    lineString = null;
-                    lineEndString = null;
                     lineEndProcessed = true;
                     continue;
                 }
@@ -762,18 +767,16 @@ public class Utilities {
                     }
                     length++; // CR line end
                     if ((i < originalChars.length) && (originalChars[i + 1] == 10)) {
-                        lineEndString = new String("<CRLF>");
+                        lineEndString = LINE_ENDING_CRLF;
                         length++; // CRLF line end
                         i++;
                     } else {
-                        lineEndString = new String("<CR>");
+                        lineEndString = LINE_ENDING_CR;
                     }
                     lineStore.add(new Line((lineStore.size() + 1), offset, length, lineString, lineEndString));
                     lineCount++;
                     offset += length;
                     length = 0;
-                    lineString = null;
-                    lineEndString = null;
                     lineEndProcessed = true;
                     continue;
                 }
@@ -791,7 +794,7 @@ public class Utilities {
                 } else {
                     lineString = subString(originalChars, offset, offset + length - 1);
                 }
-                lineEndString = new String("<LF>");
+                lineEndString = LINE_ENDING_LF;
                 char[] temp = new char[originalChars.length + 1];
                 length = 0;
                 for (char c : originalChars) {
@@ -802,8 +805,6 @@ public class Utilities {
                 originalChars = temp;
                 length++;
                 lineStore.add(new Line((lineStore.size() + 1), offset, length, lineString, lineEndString));
-                lineString = null;
-                lineEndString = null;
                 warnings.add("last line: " + (lineCount + 1) + " does not end with new line, LF added");
             }
         }
