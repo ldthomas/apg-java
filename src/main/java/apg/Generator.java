@@ -111,6 +111,10 @@ public class Generator {
      * @param args The command line arguments that provision APG.
      */
     public static void main(String[] args) {
+        
+        PrintStream out = null;
+        PrintStream lookOut = null;
+        
         try {
             // parse the command line options
             GeneratorCommandLine cl = new GeneratorCommandLine(args);
@@ -147,7 +151,7 @@ public class Generator {
                     throw new AssertionError("unable to open log file (" + fileName + ")");
                 }
                 file.createNewFile();
-                PrintStream out = new PrintStream(file);
+                out = new PrintStream(file);
                 System.out.println("console: using log file: " + file.getCanonicalPath());
                 System.setOut(out);
             }
@@ -321,7 +325,7 @@ public class Generator {
             if (outputFile != null) {
                 // 11. Java output the grammar
                 fileName = outputFile + ".java";
-                PrintStream lookOut = new PrintStream(workingDir + fileName);
+                lookOut = new PrintStream(workingDir + fileName);
                 generateJava(
                         javadoc,
                         lookOut,
@@ -395,6 +399,17 @@ public class Generator {
                 }
             }
             System.out.println(Utilities.displayError(e));
+        }
+        finally {
+            if(out != null) {
+                out.flush();
+                out.close();
+            }
+            
+            if(lookOut != null) {
+                lookOut.flush();
+                lookOut.close();
+            }
         }
     }
 
