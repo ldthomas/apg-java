@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Arrays;
 import java.io.PrintStream;
+import java.util.Locale;
 
 /**
  * The Statistics class is used to collect and display syntax tree node
@@ -465,8 +466,8 @@ public class Statistics {
     private class NameComparator implements Comparator<Details> {
 
         public int compare(Details lhs, Details rhs) {
-            String lhsLower = lhs.name.toLowerCase();
-            String rhsLower = rhs.name.toLowerCase();
+            String lhsLower = lhs.name.toLowerCase(Locale.US);
+            String rhsLower = rhs.name.toLowerCase(Locale.US);
             if (lhsLower.compareTo(rhsLower) < 0) {
                 return -1;
             }

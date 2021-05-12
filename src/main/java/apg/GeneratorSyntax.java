@@ -26,6 +26,7 @@ import java.util.TreeMap;
 import apg.Opcode.Type;
 import apg.Parser.RuleCallback;
 import apg.Utilities.*;
+import java.util.Locale;
 
 /*
  * Defines the syntax call back functions for the SABNF grammar.
@@ -435,7 +436,7 @@ class GeneratorSyntax {
             for (int i = 0; i < opcodes.size(); i++) {
                 SyntaxOpcode op = opcodes.elementAt(i);
                 if (op.type == Opcode.Type.RNM) {
-                    Integer value = ruleMap.get(op.name.toLowerCase());
+                    Integer value = ruleMap.get(op.name.toLowerCase(Locale.US));
                     if (value != null) {
                         SyntaxRule rnmRule = rules.elementAt(value);
                         SyntaxOpcode rnmOp = opcodes.elementAt(rnmRule.opcodeOffset + 1);
@@ -475,7 +476,7 @@ class GeneratorSyntax {
             } else if (length >= 0) {
                 // put the current rule in the rule list
                 currentRule.id = currentID;
-                Integer previousRule = ruleMap.put(currentRule.name.toLowerCase(), currentID);
+                Integer previousRule = ruleMap.put(currentRule.name.toLowerCase(Locale.US), currentID);
                 if (previousRule != null) {
                     // report multiply-defined rule name error
                     logError(offset, "rule '" + currentRule.name
@@ -590,7 +591,7 @@ class GeneratorSyntax {
 
                 // add the UDT to the list
                 String thisPhrase = new String(callbackData.inputString, offset, length);
-                thisPhrase = thisPhrase.toLowerCase();
+                thisPhrase = thisPhrase.toLowerCase(Locale.US);
                 if (thisPhrase.charAt(0) == 'e') {
                     thisOpcode.mayBeEmpty = true;
                 } else {
@@ -1322,11 +1323,11 @@ class GeneratorSyntax {
 
         // initialize the rules
         for (SyntaxRule rule : rules) {
-            ret.ruleRefs.put(rule.name.toLowerCase(), new RuleRefEntry(rule.name, 0));
+            ret.ruleRefs.put(rule.name.toLowerCase(Locale.US), new RuleRefEntry(rule.name, 0));
         }
         // initialize the udts
         for (SyntaxRule udt : udts) {
-            ret.udtRefs.put(udt.name.toLowerCase(), new RuleRefEntry(udt.name, 0));
+            ret.udtRefs.put(udt.name.toLowerCase(Locale.US), new RuleRefEntry(udt.name, 0));
         }
         for (SyntaxRule rule : rules) {
             for (int i = rule.opcodeOffset; i < (rule.opcodeOffset + rule.opcodeCount); i++) {
@@ -1358,7 +1359,7 @@ class GeneratorSyntax {
                         break;
                     case UDT:
                         ret.udt++;
-                        entry = ret.udtRefs.get(opcode.name.toLowerCase());
+                        entry = ret.udtRefs.get(opcode.name.toLowerCase(Locale.US));
                         if (entry != null) {
                             entry.count = entry.count + 1;
                         } else {
@@ -1370,7 +1371,7 @@ class GeneratorSyntax {
                         break;
                     case RNM:
                         ret.rnm++;
-                        entry = ret.ruleRefs.get(opcode.name.toLowerCase());
+                        entry = ret.ruleRefs.get(opcode.name.toLowerCase(Locale.US));
                         if (entry != null) {
                             entry.count = entry.count + 1;
                         } else {

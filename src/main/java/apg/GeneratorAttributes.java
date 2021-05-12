@@ -17,6 +17,7 @@ import java.util.TreeMap;
 
 import apg.GeneratorSyntax.SyntaxOpcode;
 import apg.GeneratorSyntax.SyntaxRule;
+import java.util.Locale;
 
 class GeneratorAttributes {
 
@@ -143,8 +144,8 @@ class GeneratorAttributes {
 
         @Override
         public int compare(SyntaxRule lhs, SyntaxRule rhs) {
-            String lhsLower = lhs.name.toLowerCase();
-            String rhsLower = rhs.name.toLowerCase();
+            String lhsLower = lhs.name.toLowerCase(Locale.US);
+            String rhsLower = rhs.name.toLowerCase(Locale.US);
             if (lhsLower.compareTo(rhsLower) < 0) {
                 return -1;
             }
