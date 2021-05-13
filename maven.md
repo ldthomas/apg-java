@@ -2,7 +2,7 @@
 ## A Maven Project for the Java APG 1.1.0 Examples
 The examples are meant to illustrate the basic usage of Java APG with emphasis on the new UDT feature, first introduced in Java APG Version 1.0. Building the jar file and executing the examples is fine, as far as it goes. But to be really useful, you need to be able to follow along in a debugger, make changes, play with your own modifications, etc.
 
-As released, Java APG 1.1.0 is not set up for an "in place" maven project. If you are already a maven expert, you should have no trouble doing this. (See, for example, the branch [ssill2/apg-java](https://github.com/ssill2/apg-java).) However, here is one way to convert just the examples to a maven project. I'll assume that we are in the directory `/my-path` and using maven 3.8.1,  JDK 11 and NetBeans 12.3. Other versions will surely work and you can adjust these instructions accordingly.
+As released, Java APG 1.1.0 is not set up for an "in place" maven project. If you are already a maven expert, you should have no trouble doing this. (See, for example, the branch [ssill2/apg-java](https://github.com/ssill2/apg-java/tree/maven).) However, here is one way to convert just the examples to a maven project. I'll assume that we are in the directory `/my-path` and using maven 3.8.1,  JDK 11 and NetBeans 12.3. Other versions will surely work and you can adjust these instructions accordingly.
 ```
 git clone https://github.com/ldthomas/apg-java.git
 cd apg-java/build
