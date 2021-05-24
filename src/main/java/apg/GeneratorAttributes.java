@@ -17,6 +17,7 @@ import java.util.TreeMap;
 
 import apg.GeneratorSyntax.SyntaxOpcode;
 import apg.GeneratorSyntax.SyntaxRule;
+import java.util.Locale;
 
 class GeneratorAttributes {
 
@@ -48,7 +49,7 @@ class GeneratorAttributes {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         Comparator<SyntaxRule> compare = new NameComparator();
         SyntaxRule[] ruleList = new SyntaxRule[rules.size()];
         int i = 0;
@@ -143,8 +144,8 @@ class GeneratorAttributes {
 
         @Override
         public int compare(SyntaxRule lhs, SyntaxRule rhs) {
-            String lhsLower = lhs.name.toLowerCase();
-            String rhsLower = rhs.name.toLowerCase();
+            String lhsLower = lhs.name.toLowerCase(Locale.US);
+            String rhsLower = rhs.name.toLowerCase(Locale.US);
             if (lhsLower.compareTo(rhsLower) < 0) {
                 return -1;
             }
@@ -156,7 +157,7 @@ class GeneratorAttributes {
         }
     }
 
-    private class Attrs {
+    private class Attrs implements Cloneable {
 
         private static final char YES = 'o';
         private static final char NO = '-';
@@ -168,7 +169,7 @@ class GeneratorAttributes {
             clear();
         }
 
-        void clear() {
+        final void clear() {
             this.refs = 0;
             this.open = false;
             this.left = false;
@@ -189,7 +190,8 @@ class GeneratorAttributes {
         }
 
         @Override
-        public Attrs clone() {
+        public Attrs clone() throws CloneNotSupportedException {
+            super.clone();
             Attrs attrs = new Attrs();
             copy(attrs);
             attrs.refs = this.refs;

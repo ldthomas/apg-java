@@ -15,3 +15,6 @@ RemoteSystemsTempFiles
 how-to.txt
 grammar-regen.sh
 /src/examples/target/
+target
+/nbproject/
+jshell.history

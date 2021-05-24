@@ -53,9 +53,9 @@ class GeneratorCommandLine {
         LOGFILE("/log=", null, "name of log file, if null print log file to console"),
         PACKAGE("/package=", "package.name", "package name for the generated grammar"),
         WORKING_DIR("/dir=", "./", "working directory for input and output files");
-        private String p;
-        private String d;
-        private String v;
+        private final String p;
+        private final String d;
+        private final String v;
 
         Params(String prefix, String value, String desc) {
             this.p = prefix;
@@ -181,7 +181,7 @@ class GeneratorCommandLine {
         }
     }
 
-    void displayHelpScreen(String msg, String[] args) {
+    final void displayHelpScreen(String msg, String[] args) {
         System.out.println("\n*** HELP ***");
         System.out.println("reason: " + msg);
         System.out.println(" usage: java -jar apg.jar [args]");

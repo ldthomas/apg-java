@@ -8,6 +8,8 @@
 *   ******************************************************************************/
 package examples;
 
+import java.util.Locale;
+
 class Utils {
 
     static class Timer {
@@ -47,7 +49,7 @@ class Utils {
             }
         }
 
-        public void clear() {
+        public final void clear() {
             started = false;
             start = 0;
             end = 0;
@@ -236,7 +238,7 @@ class Utils {
                     // check parameters
                     for (Parameter pm : params) {
                         if (caseSensitive) {
-                            if (tok.toLowerCase().startsWith(pm.getArg().toLowerCase())) {
+                            if (tok.toLowerCase(Locale.US).startsWith(pm.getArg().toLowerCase(Locale.US))) {
                                 getParamValue(pm, tokIndex, tok);
                                 matched = true;
                                 break;
