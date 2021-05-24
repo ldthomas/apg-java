@@ -53,16 +53,15 @@ git checkout maven
 mvn clean install
 
 ```
-```
 This will do the following:
-Build the library jar under target.
-Execute unit tests.
-Generate javadoc under target/site/apidocs
-Install the jar in the local maven repository for use by other projects that need apg-java as a dependency.
-```
-```
+- Build the library jar under target.
+- Execute unit tests.
+- Generate javadoc under target/site/apidocs
+- Install the jar in the local maven repository for use by other projects that need apg-java as a dependency.
+
 To use apg-java in your project just modify the project's pom.xml file to include the following dependency.
 
+```
 <dependencies>
     <dependency>
        <groupId>com.ldthomas.apg</groupId>
@@ -71,15 +70,16 @@ To use apg-java in your project just modify the project's pom.xml file to includ
     </dependency>
 </dependencies>
 ```
-``` 
+ 
 See the [maven.md](maven.md) for details on how to run the examples in a NetBeans maven project.
 
 
-To see the documentation open the following file in a web-browser.  Or visit the [APG website](https://sabnf.com).
+To see the documentation open the following file in a web-browser.
 
 ```
 target/site/apidocs/index.html
 ```
+Or visit the [APG website](https://sabnf.com).
 
 **Copyright:**  
  _Copyright &copy; 2021 Lowell D. Thomas, all rights reserved_
