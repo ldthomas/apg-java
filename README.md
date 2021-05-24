@@ -31,16 +31,16 @@ For more details see the documentation or visit the <a href="https://sabnf.com">
 
 | Directories/files:       | description                                                                                                                                                                                                                         |
 | :----------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| src/apg                  | Java APG, the generator and the runtime library required by all generated parsers.                                                                                                                                                  |
-| src/examples/            | Examples to demonstrate how to set up and use a Java APG parser. The main function here is the driver for running any and all of the following examples. See javadoc `examples.Main` for a complete list of the tests that it runs. |
-| src/examples/anbn        | Comparisons the CFG and UDT parsers for the a<sup>n</sup>b<sup>n</sup>, n > 0, grammar.                                                                                                                                             |
-| src/examples/anbncn      | Comparisons the CFG and UDT parsers for the a<sup>n</sup>b<sup>n</sup>c<sup>n</sup>, n > 0, grammar.                                                                                                                                |
-| src/examples/demo        | Demonstrates many of the main features of Java APG including UDTs.                                                                                                                                                                  |
-| src/examples/expressions | Comparisons the CFG and UDT parsers for the expressions grammar.                                                                                                                                                                    |
-| src/examples/inifile     | Comparisons the CFG and UDT parsers for the inifile grammar.                                                                                                                                                                        |
-| src/examples/mailbox     | Comparisons the CFG and UDT parsers for the mailbox grammar ().                                                                                                                                                                     |
-| src/examples/testudtlib  | Comparisons the CFG and UDT parsers for the suite of UdtLib UDTs.                                                                                                                                                                   |
-| build/                   | Scripts and files for compiling and documenting Java APG.                                                                                                                                                                           |
+| src/main/java/apg                  | Java APG, the generator and the runtime library required by all generated parsers.                                                                                                                                                  |
+| src/test/java/examples/            | Examples to demonstrate how to set up and use a Java APG parser. The main function here is the driver for running any and all of the following examples. See javadoc `examples.Main` for a complete list of the tests that it runs. |
+| src/test/java/examples/anbn        | Comparisons the CFG and UDT parsers for the a<sup>n</sup>b<sup>n</sup>, n > 0, grammar.                                                                                                                                             |
+| src/test/java/examples/anbncn      | Comparisons the CFG and UDT parsers for the a<sup>n</sup>b<sup>n</sup>c<sup>n</sup>, n > 0, grammar.                                                                                                                                |
+| src/test/java/examples/demo        | Demonstrates many of the main features of Java APG including UDTs.                                                                                                                                                                  |
+| src/test/java/examples/expressions | Comparisons the CFG and UDT parsers for the expressions grammar.                                                                                                                                                                    |
+| src/test/java/examples/inifile     | Comparisons the CFG and UDT parsers for the inifile grammar.                                                                                                                                                                        |
+| src/test/java/examples/mailbox     | Comparisons the CFG and UDT parsers for the mailbox grammar ().                                                                                                                                                                     |
+| src/test/examples/testudtlib  | Comparisons the CFG and UDT parsers for the suite of UdtLib UDTs.                                                                                                                                                                   |
+| build/                        | (Deprecated carried over from non-maven build) Scripts and files for compiling and documenting Java APG.                                                                                                                                                                           |
 | LICENSE.md                  | 2-Clause BSD license.                                                                                                                                                                                        |
 | README.md                | This file.                                                                                                                                                                                                                          |
 
@@ -50,32 +50,26 @@ To compile all source code and create the package `.jar` files:
 
 ```
 git clone https://github.com/ldthomas/apg-java.git
-cd apg-java/build
-./make-jars
-```
-
-This will create `apg.jar` and `examples.jar`. To test `apg.jar` run:
+cd apg-java
+git checkout maven
+mvn clean install
 
 ```
-java -jar apg.jar /version
+
+This will do the following:
+Build the library jar under target.
+Execute unit tests.
+Generate javadoc under target/site/apidocs
+Install the jar in the local maven repository for use by other projects that need apg-java as a dependency.
+
 ```
-To test `examples.jar` run:
-```
-java -jar examples.jar /test=all
-```
-**Maven:**
-For maven development, install apg.jar in the local repository.
-```
-mvn install:install-file -DgroupId=com.sabnf -DartifactId=apg -Dversion=1.1-SNAPSHOT -Dpackaging=jar -Dfile=apg.jar -DgeneratePom=true
-```
-Then modify the project's pom.xml file to include,
+To use apg-java in your project just modify the project's pom.xml file to include the following dependency.
 ```
 <dependencies>
     <dependency>
-        <groupId>com.sabnf</groupId>
-        <artifactId>apg</artifactId>
-        <version>1.1-SNAPSHOT</version>
-        <scope>compile</scope>
+       <groupId>com.ldthomas.apg</groupId>
+       <artifactId>apg-java</artifactId>
+       <version>1.1.0</version>
     </dependency>
 </dependencies>
 
@@ -83,18 +77,14 @@ Then modify the project's pom.xml file to include,
 See the [maven.md](maven.md) for details on how to run the examples in a NetBeans maven project.
 
 
-**Documentation:**  
-To see the documentation run:
+To see the documentation open the following file in a web-browser.  Or visit the [APG website](https://sabnf.com).
 
 ```
-./make-javadoc
+target/site/apidocs/index.html
 ```
-
-Open `../javadoc/index.html` in any web browser. Or visit the [APG website](https://sabnf.com).
 
 **Copyright:**  
  _Copyright &copy; 2021 Lowell D. Thomas, all rights reserved_
 
 **License:**  
  Java APG Version 1.1.0 is released under the [2-Clause BSD license](https://opensource.org/licenses/BSD-2-Clause).
-
