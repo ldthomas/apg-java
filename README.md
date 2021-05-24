@@ -82,6 +82,11 @@ Then modify the project's pom.xml file to include,
 ``` 
 See the [maven.md](maven.md) for details on how to run the examples in a NetBeans maven project.
 
+_NOTE:_ A second branch, maven, has been added which is a complete maven project for apg and the examples.
+It was created by [Stephen Sill II](https://github.com/ssill2) on his [apg-java fork](https://github.com/ssill2/apg-java).
+It has updates to satisfy some of the security items flagged by
+[Fortify](https://www.microfocus.com/en-us/cyberres/application-security/static-code-analyzer) security scans.
+The Fortify updates have not been integrated into the master branch.
 
 **Documentation:**  
 To see the documentation run:
