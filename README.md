@@ -45,8 +45,6 @@ For more details see the documentation or visit the <a href="https://sabnf.com">
 | README.md                | This file.                                                                                                                                                                                                                          |
 
 **Installation:**
-The `build/` directory has scripts and files for compiling and documenting Java APG.  
-To compile all source code and create the package `.jar` files:
 
 ```
 git clone https://github.com/ldthomas/apg-java.git
@@ -55,16 +53,16 @@ git checkout maven
 mvn clean install
 
 ```
-
+```
 This will do the following:
 Build the library jar under target.
 Execute unit tests.
 Generate javadoc under target/site/apidocs
 Install the jar in the local maven repository for use by other projects that need apg-java as a dependency.
-
+```
 ```
 To use apg-java in your project just modify the project's pom.xml file to include the following dependency.
-```
+
 <dependencies>
     <dependency>
        <groupId>com.ldthomas.apg</groupId>
@@ -72,7 +70,7 @@ To use apg-java in your project just modify the project's pom.xml file to includ
        <version>1.1.0</version>
     </dependency>
 </dependencies>
-
+```
 ``` 
 See the [maven.md](maven.md) for details on how to run the examples in a NetBeans maven project.
 
